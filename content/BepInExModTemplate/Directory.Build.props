@@ -9,8 +9,8 @@
   <PropertyGroup>
 <!--#if (!no-tutorial) -->
     <!-- Define a variable that points to this directory. -->
-    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
 <!--#endif -->
+    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
   </PropertyGroup>
 
   <!-- Import our shared user configuration file -->
