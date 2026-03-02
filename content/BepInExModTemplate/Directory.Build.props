@@ -4,8 +4,8 @@
     This is a special file that contains shared configuration
     for all project files in subdirectories.
   -->
-<!--#endif -->
 
+<!--#endif -->
   <PropertyGroup>
 <!--#if (!no-tutorial) -->
     <!-- Define a variable that points to this directory. -->
@@ -81,5 +81,4 @@
     <_GameNameNoSpaces_BepInExDir Condition="$(_GameNameNoSpaces_BepInExDir) == ''">$(_GameNameNoSpaces_GameRootDir)/BepInEx/</_GameNameNoSpaces_BepInExDir>
     <ManagedDir>$(_GameNameNoSpaces_GameRootDir)/_GameName__Data/Managed/</ManagedDir>
   </PropertyGroup>
-
 </Project>

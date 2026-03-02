@@ -4,8 +4,8 @@
     This is a special file that contains shared configuration
     for all project files in subdirectories.
   -->
-<!--#endif -->
 
+<!--#endif -->
   <!-- Set additional NuGet sources -->
   <PropertyGroup>
     <RestoreAdditionalProjectSources>
@@ -70,11 +70,7 @@
   </ItemGroup>
 
   <!-- Copy mod files defined in projects to the target BepInEx directory -->
-  <Target
-    Name="DeployFiles"
-    AfterTargets="Build"
-    Condition="'$(DeployModFilesEnabled)' == 'true'"
-  >
+  <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployModFilesEnabled)' == 'true'">
     <PropertyGroup>
       <_TargetDir>$([MSBuild]::NormalizeDirectory($(_GameNameNoSpaces_BepInExDir)))</_TargetDir>
     </PropertyGroup>
@@ -86,10 +82,7 @@
       Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure _GameNameNoSpaces_BepInExDir to point to a valid path in the Config.Build.user.props file."
       Condition="!Exists('$(_TargetDir)')"
     />
-    <Copy
-      SourceFiles="@(DeployModFiles)"
-      DestinationFolder="$(_TargetDir)%(BepInExDir)"
-    />
+    <Copy SourceFiles="@(DeployModFiles)" DestinationFolder="$(_TargetDir)%(BepInExDir)" />
   </Target>
 
   <!--
@@ -123,5 +116,4 @@
     <Exec Command="dotnet tool restore" />
     <Exec Command="dotnet tcli $(BuildArgument) --package-version $(Version)" />
   </Target>
-
 </Project>

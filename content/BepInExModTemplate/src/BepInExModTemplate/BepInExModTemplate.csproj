@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
 <!--#if (!no-tutorial) -->
     <!-- This is the most appropriate target framework for the game's Unity version. -->
@@ -51,8 +50,8 @@
     -->
 <!--#endif -->
   </ItemGroup>
-
 <!--#if (!no-tutorial) -->
+
   <!--
     To reference mod assemblies from Thunderstore packages via NuGet,
     this project includes the following NuGet feed:
@@ -70,6 +69,5 @@
     Note that this does NOT mark the package as a dependency
     for your Thunderstore package.
   -->
-
 <!--#endif -->
 </Project>
