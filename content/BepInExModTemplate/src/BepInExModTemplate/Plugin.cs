@@ -10,10 +10,14 @@ namespace BepInExModTemplate;
 // https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/identifier-names
 // https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-namespaces
 
-// This BepInAutoPlugin attribute comes from the Hamunii.BepInEx.AutoPlugin
+// The BepInAutoPlugin attribute comes from the Hamunii.BepInEx.AutoPlugin
 // NuGet package, and it will generate the BepInPlugin attribute for you!
 // For more info, see https://github.com/Hamunii/BepInEx.AutoPlugin
 //#endif
+
+/// <summary>
+/// The BepInEx plugin class of BepInExModTemplate.
+/// </summary>
 [BepInAutoPlugin]
 public partial class Plugin : BaseUnityPlugin
 {

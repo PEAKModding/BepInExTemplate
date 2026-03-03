@@ -22,6 +22,7 @@
   <!-- NuGet metadata -->
   <PropertyGroup>
     <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!--
       TODO: Fill these values. See:
       https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices
