@@ -101,6 +101,7 @@ The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
 ├── Config.Build.user.props.template
 ├── Directory.Build.props
 ├── Directory.Build.targets
+├── global.json
 ├── icon.png
 ├── LICENSE
 ├── MyCoolMod.slnx
@@ -111,12 +112,22 @@ The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
         ├── Plugin.cs
         └── thunderstore.toml
 
-3 directories, 12 files
+3 directories, 13 files
 ```
 
-The C# source files for your mod are located in `./src/<project-name>/`. All files above that are more generic project configuration files.
+- `./src/<project-name>/` contains the C# source files for your mod
+  - `<project-name>.csproj` is the C# project configuration file, which builds a `dll` file
+  - `Plugin.cs` is the C# source code file which defines your BepInEx plugin class
+  - `thunderstore.toml` is a  metadata file for packaging your mod with Thunderstore CLI (see [Thunderstore Packaging](#thunderstore-packaging))
+- `./` contains project configuration files
+  - `Directory.Build.*` files contain shared configuration for all projects in subdirectories
+  - `Config.Build.user.props.template` is a template file for per-user configuration (see [Setting Up The Config File](#setting-up-the-config-file))
+  - `<project-name>.slnx` is file which defines which `csproj` files are included in your project
+  - `global.json` informs your dev tools of the minimum supported .NET SDK version for the project
+  - `CHANGELOG.md`, `icon.png`, `LICENSE`, and `README.md` are placeholder files which are to be modified by you
+    - These are included in your Thunderstore package, which is configured in `./src/<project-name>/thunderstore.toml`
 
-The `Directory.Build.*` files contain shared configuration for all projects in subdirectories. The project is configured so that it's easy to add new projects into your project solution. Even if you don't need that, it's good to follow this standard project structure.
+The project is configured so that it's easy to add new projects into your project solution. Even if you don't need that, it's a good idea to follow a standard project structure in case a need ever comes, or just so that everything is where you'd expect it to be. For example, does your project need automated tests? Copy your `./src/<project-name>/` plugin's `csproj` and `Plugin.cs` to `./tests/<project-name>.Tests/`, add the new `csproj` to your `slnx` project, and start working on your test project.
 
 ### Setting Up The Config File
 
@@ -138,7 +149,7 @@ dotnet build -c Release -v d
 > You can learn about different build options with `dotnet build --help`.  
 > `-c` is short for `--configuration` and `-v d` is `--verbosity detailed`.
 
-The built package will be found at `artifacts/thunderstore/`.
+The built package will be found at `./artifacts/thunderstore/`.
 
 You can also directly publish to Thunderstore by including `-property:PublishTS=true` in the command.
 
@@ -147,4 +158,4 @@ You can also directly publish to Thunderstore by including `-property:PublishTS=
 
 ### GitHub Actions Publishing
 
-Coming soon.
+Coming sometime, possibly.
