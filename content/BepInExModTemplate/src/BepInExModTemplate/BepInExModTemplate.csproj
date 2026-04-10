@@ -13,9 +13,25 @@
 <!--#endif -->
     <AssemblyTitle>BepInExModTemplate</AssemblyTitle>
 <!--#if (!no-tutorial) -->
-    <!-- This is the version number of your mod. -->
+    <!-- Package name on Thunderstore. Must not contain spaces ' ' or dashes '-'. -->
 <!--#endif -->
-    <Version>0.1.0</Version>
+    <ThunderstoreName>BepInExModTemplate</ThunderstoreName>
+<!--#if (!no-tutorial) -->
+    <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
+<!--#endif -->
+    <Version>0.1.3</Version>
+    <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
+    <!--
+        Communities and package categories metadata for publishing with ThunderPipe.
+        Communities: https://thunderstore.io/api/experimental/community/
+        Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
+    -->
+    <ThunderstoreCommunities>_ThunderstoreGameIdentifier_</ThunderstoreCommunities>
+    <ThunderstoreCategories>mods</ThunderstoreCategories>
+<!--#if (!no-tutorial) -->
+    <!-- Whether or not this project should build a Thunderstore package. -->
+<!--#endif -->
+    <IsThunderstorePackable>true</IsThunderstorePackable>
   </PropertyGroup>
 
 <!--#if (library) -->
@@ -36,21 +52,42 @@
   </ItemGroup>
 
 <!--#endif -->
-  <!-- Mod files to copy to the relative BepInEx directory after build -->
+  <!--
+    Define mod files to copy to the relative BepInEx directory after build
+    and where they are packed to when building a Thunderstore package
+  -->
   <ItemGroup>
 <!--#if (!no-tutorial) -->
     <!-- TargetPath is the dll file produced during build. -->
 <!--#endif -->
-    <DeployModFiles Include="$(TargetPath)" BepInExDir="plugins/" />
+    <ThunderstoreFile Include="$(TargetPath)" Destination="plugins/" />
 <!--#if (!no-tutorial) -->
     <!--
       If your project needs additional files, e.g. asset bundles,
       you can add them here. Example:
 
-      <DeployModFiles Include="./Assets/bundle" BepInExDir="plugins/" />
+      <ThunderstoreFile Include="./Assets/bundle" Destination="plugins/" />
     -->
 <!--#endif -->
   </ItemGroup>
+
+  <!-- Thunderstore package metadata -->
+  <ItemGroup>
+    <ThunderstorePackageFile Include="$(SolutionRoot)README.md" />
+    <ThunderstorePackageFile Include="$(SolutionRoot)CHANGELOG.md" />
+    <ThunderstorePackageFile Include="$(SolutionRoot)icon.png" />
+    <ThunderstorePackageFile Include="$(SolutionRoot)LICENSE" />
+
+<!--#if (!no-tutorial) -->
+    <!--
+      A list of Thunderstore packages this package requires at runtime.
+      Note: This does NOT mark these as dependencies for this C# project;
+            that must be done separately with PackageReference items.
+    -->
+<!--#endif -->
+    <ThunderstoreDependency Include="BepInEx-BepInExPack" Version="5.4.2305" />
+  </ItemGroup>
+
 <!--#if (!no-tutorial) -->
 
   <!--

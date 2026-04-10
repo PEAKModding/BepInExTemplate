@@ -7,7 +7,7 @@
   - [Creating a Project](#creating-a-project)
     - [Project Structure](#project-structure)
     - [Setting Up The Config File](#setting-up-the-config-file)
-    - [Thunderstore Packaging](#thunderstore-packaging)
+    - [Thunderstore Packaging \& Publishing](#thunderstore-packaging--publishing)
     - [GitHub Actions Publishing](#github-actions-publishing)
 
 Template creator: After forking, replace the following, e.g.:
@@ -84,7 +84,7 @@ dotnet new _GameNameShortNoSpacesLowercase_mod --output ModName --guid com.githu
 
 This will create a new directory with the mod name which contains the project.
 
-You now have a (mostly) working setup. See [Setting Up The Config File](#setting-up-the-config-file) and [Thunderstore Packaging](#thunderstore-packaging) for more.
+You now have a (mostly) working setup. See [Setting Up The Config File](#setting-up-the-config-file) and [Thunderstore Packaging \& Publishing](#thunderstore-packaging--publishing) for more.
 
 ### Project Structure
 
@@ -109,16 +109,14 @@ The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
 └── src
     └── MyCoolMod
         ├── MyCoolMod.csproj
-        ├── Plugin.cs
-        └── thunderstore.toml
+        └── Plugin.cs
 
-3 directories, 13 files
+3 directories, 12 files
 ```
 
 - `./src/<project-name>/` contains the C# source files for your mod
   - `<project-name>.csproj` is the C# project configuration file, which builds a `dll` file
   - `Plugin.cs` is the C# source code file which defines your BepInEx plugin class
-  - `thunderstore.toml` is a  metadata file for packaging your mod with Thunderstore CLI (see [Thunderstore Packaging](#thunderstore-packaging))
 - `./` contains project configuration files
   - `Directory.Build.*` files contain shared configuration for all projects in subdirectories
   - `Config.Build.user.props.template` is a template file for per-user configuration (see [Setting Up The Config File](#setting-up-the-config-file))
@@ -135,11 +133,11 @@ At the root of your new project you should see `Config.Build.user.props.template
 
 This file will copy your assembly files to a plugins directory and it can be used to configure your paths to the game files and BepInEx plugins directory if the defaults don't work for you.
 
-### Thunderstore Packaging
+### Thunderstore Packaging & Publishing
 
-This template comes with Thunderstore packaging built-in, using [TCLI](<https://github.com/thunderstore-io/thunderstore-cli>). You should configure the `src/<project-name>/thunderstore.toml` file for your mod, such as setting the description for your mod.
+This template comes with Thunderstore packaging built-in, using [ThunderPipe](<https://github.com/WarperSan/ThunderPipe>). You should configure the `src/<project-name>/<project-name>.csproj` file with the Thunderstore metadata for your mod.
 
-You can build Thunderstore packages by running:
+You can build Thunderstore packages by building with release configuration:
 
 ```sh
 dotnet build -c Release -v d
@@ -151,10 +149,7 @@ dotnet build -c Release -v d
 
 The built package will be found at `./artifacts/thunderstore/`.
 
-You can also directly publish to Thunderstore by including `-property:PublishTS=true` in the command.
-
-> [!NOTE]
-> For publishing to Thunderstore, you need a Thunderstore API token. The publishing to Thunderstore option is intended to be used via automated GitHub actions workflows, so you don't need to worry about it.
+You can directly publish to Thunderstore by including `-p:PublishTS=true` in the command. See the `Config.Build.user.props.template` file for configuration instructions.
 
 ### GitHub Actions Publishing
 

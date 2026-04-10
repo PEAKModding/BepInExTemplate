@@ -6,12 +6,28 @@
   -->
 
 <!--#endif -->
-  <!-- Set additional NuGet sources -->
+  <Sdk Name="ThunderPipe.Sdk" Version="0.1.2" />
+
   <PropertyGroup>
+    <!-- Set additional NuGet sources -->
     <RestoreAdditionalProjectSources>
       https://nuget.bepinex.dev/v3/index.json;
       https://nuget.windows10ce.com/nuget/v3/index.json
     </RestoreAdditionalProjectSources>
+<!--#if (!no-tutorial) -->
+    <!--
+      Conditions for ThunderPipe.Sdk to Pack, and Publish to Thunderstore
+      Learn more: https://github.com/WarperSan/ThunderPipe/blob/master/ThunderPipe.Sdk/README.md
+    -->
+<!--#endif -->
+    <RunThunderPipePackAfterBuild
+      Condition="'$(RunThunderPipePackAfterBuild)' != 'false' And '$(IsThunderstorePackable)' == 'true' And '$(Configuration)' == 'Release'"
+      >true</RunThunderPipePackAfterBuild
+    >
+    <RunThunderPipePublishAfterBuild
+      Condition="'$(RunThunderPipePublishAfterBuild)' != 'false' And '$(RunThunderPipePackAfterBuild)' == 'true' And '$(PublishTS)' == 'true'"
+    >true</RunThunderPipePublishAfterBuild
+    >
   </PropertyGroup>
 
   <!-- Build dependencies -->
@@ -70,50 +86,26 @@
   </ItemGroup>
 
   <!-- Copy mod files defined in projects to the target BepInEx directory -->
-  <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployModFilesEnabled)' == 'true'">
+  <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployThunderstoreFiles)' == 'true'">
     <PropertyGroup>
       <_TargetDir>$([MSBuild]::NormalizeDirectory($(_GameNameNoSpaces_BepInExDir)))</_TargetDir>
     </PropertyGroup>
     <Message
-      Text="Deploy → @(DeployModFiles -> '%(BepInExDir)%(FileName)%(Extension)')"
+      Text="Deploy → @(ThunderstoreFile -> '%(Destination)%(FileName)%(Extension)')"
       Importance="High"
     />
     <Error
       Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure _GameNameNoSpaces_BepInExDir to point to a valid path in the Config.Build.user.props file."
       Condition="!Exists('$(_TargetDir)')"
     />
-    <Copy SourceFiles="@(DeployModFiles)" DestinationFolder="$(_TargetDir)%(BepInExDir)" />
+    <Copy SourceFiles="@(ThunderstoreFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
   </Target>
 
-  <!--
-    To make building Thunderstore packages uncoupled from release builds, swap
-    the positions of this Target line:
-    <Target
-      Name="PackTS"
-      DependsOnTargets="Build"
-      Condition="'$(ThunderstorePackable)' != 'false'"
-    >
-    and the one below.
-
-    If you uncouple Thunderstore package builds from release builds, you can build
-    Thunderstore packages by calling `dotnet build -c Release -target:PackTS -v d` (verbosity detailed).
-
-    Publish to Thunderstore by including `-property:PublishTS=true` in the command.
-  -->
   <Target
-    Name="PackTS"
-    AfterTargets="Build"
-    Condition="'$(Configuration)' == 'Release' And '$(ThunderstorePackable)' != 'false'"
+    Name="EnsureReleaseOnPublishTS"
+    BeforeTargets="ThunderPipePublish"
+    Condition="'$(RunThunderPipePublishAfterBuild)' == 'true' And '$(Configuration)' != 'Release'"
   >
-    <Error
-      Text=" PackTS must be called with Release configuration."
-      Condition="'$(Configuration)' != 'Release'"
-    />
-    <PropertyGroup>
-      <BuildArgument Condition="'$(PublishTS)' != 'true'">build</BuildArgument>
-      <BuildArgument Condition="'$(PublishTS)' == 'true'">publish</BuildArgument>
-    </PropertyGroup>
-    <Exec Command="dotnet tool restore" />
-    <Exec Command="dotnet tcli $(BuildArgument) --package-version $(Version)" />
+    <Error Text="Release configuration must be used when publishing Thunderstore package." />
   </Target>
 </Project>

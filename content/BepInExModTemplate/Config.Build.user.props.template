@@ -1,3 +1,11 @@
+<!--
+  INSTRUCTIONS: Copy this template file and name it 'Config.Build.user.props'!
+                Otherwise the values aren't read.
+                Do not remove this file from git; this exists for everyone else
+                to use as a template for their user-specific configuration.
+                The copy 'Config.Build.user.props' is gitignored and should not
+                be tracked by git.
+-->
 <Project>
   <PropertyGroup>
     <!-- Set if the default steam game install directory doesn't work. -->
@@ -7,6 +15,94 @@
     <!-- <_GameNameNoSpaces_BepInExDir></_GameNameNoSpaces_BepInExDir> -->
 
     <!-- Enable/disable deploying mod files to BepInEx directory. -->
-    <DeployModFilesEnabled>true</DeployModFilesEnabled>
+    <DeployThunderstoreFiles>true</DeployThunderstoreFiles>
+
+    <!--
+      Configuring Thunderstore API token for uploading to Thunderstore:
+
+      NOTE: If you have done this before on this PC for this Thunderstore team (_ts-team_),
+            you don't need to do this again! Aka you can ignore these instructions.
+
+      0. Do I need to configure a Thunderstore API token?
+        No, unless if you are the author and want to upload this
+        project's Thunderstore package(s) to Thunderstore when running:
+        dotnet build -c Release -p:PublishTS=true -v d
+
+      1. Context:
+        We fetch your Thunderstore API token via a proxy key to prevent your
+        real token from getting leaked if it accidentally ends up on e.g. GitHub.
+        Leaking the real token would give anyone full access to your Thunderstore team.
+
+        For the proxy, we use secret-tool on Linux, and Microsoft.PowerShell.SecretManagement on Windows.
+        https://man.archlinux.org/man/secret-tool.1.en
+        https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.secretmanagement/
+
+        Below is a target named 'EnsureThunderstoreToken'; this fetches the real
+        Thunderstore API token from the proxy with the key $(ThunderstoreTeamTokenKey) (do not modify it).
+
+      2. GETTING YOUR THUNDERSTORE TOKEN:
+        Log in to https://thunderstore.io/
+          > Settings
+          > Teams
+          > (select your team, create new if necessary)
+          > Service Accounts
+          > Add Service Account
+          > (name it something like 'local' and confirm)
+          > (select the API token and copy it to clipboard (Ctrl+C))
+
+      3. SETTING YOUR THUNDERSTORE TOKEN FOR THIS PROJECT:
+
+        - If you are on Windows, run the following command in a terminal
+          with YOUR_API_TOKEN as what you just copied (paste it with either Ctrl+V or Ctrl+Shift+V):
+            Set-Secret -Name "service thunderstore team _ts-team_" -Secret YOUR_API_TOKEN
+
+          You can confirm the secret is set correctly by running the following:
+            Get-Secret -AsPlainText -Name "thunderstore team _ts-team_"
+          You are now done.
+
+        - If you are on Linux, run the following command in a terminal:
+            secret-tool store -l="Token for _ts-team_" service thunderstore team _ts-team_
+
+          Once run, it asks for the secret, so paste the API token with
+          Ctrl+Shift+V (typical for terminal apps) or Ctrl+V depending on your terminal app.
+          The input may be hidden, which is a feature. Press enter to set the secret.
+
+          You can confirm the secret is set correctly by running the following:
+            secret-tool lookup service thunderstore team _ts-team_
+          You are now done.
+
+        - If you are on MacOS, good luck.
+
+      4. Was that really it?
+        Yes, that was it.
+        Do NOT proceed to paste your Thunderstore API token in this file or anywhere else!
+    -->
   </PropertyGroup>
+
+  <!-- Do not modify unless if you know what you're doing. -->
+  <Target
+    Name="EnsureThunderstoreToken"
+    AfterTargets="Build"
+    BeforeTargets="ThunderPipePublish"
+    Condition="'$(ThunderstoreToken)' == '' And '$(RunThunderPipePublishAfterBuild)' == 'true'"
+  >
+    <PropertyGroup>
+      <ThunderstoreTeamTokenKey>service thunderstore team $(ThunderstoreTeam)</ThunderstoreTeamTokenKey>
+      <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Linux'))"
+      >secret-tool lookup $(ThunderstoreTeamTokenKey)</CommandGetSecret
+      >
+      <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Windows'))"
+      >Get-Secret -AsPlainText -Name "$(ThunderstoreTeamTokenKey)"</CommandGetSecret
+      >
+    </PropertyGroup>
+    <Exec
+      Command="$(CommandGetSecret)"
+      Condition="'$(CommandGetSecret)' != ''"
+      ConsoleToMSBuild="true"
+      StandardOutputImportance="low"
+      EchoOff="true"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="ThunderstoreToken" />
+    </Exec>
+  </Target>
 </Project>

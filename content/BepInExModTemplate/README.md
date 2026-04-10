@@ -14,9 +14,9 @@ Next steps:
   - Game assembly references should work if the path to the game is valid
 - Search `TODO` in the whole project to see what you should configure or modify
 
-### Thunderstore Packaging
+### Thunderstore Packaging & Publishing
 
-This template comes with Thunderstore packaging built-in, using [TCLI](<https://github.com/thunderstore-io/thunderstore-cli>).
+This template comes with Thunderstore packaging built-in, using [ThunderPipe](<https://github.com/WarperSan/ThunderPipe>).
 
 You can build Thunderstore packages by building with release configuration:
 
@@ -29,3 +29,8 @@ dotnet build -c Release -v d
 > `-c` is short for `--configuration` and `-v d` is `--verbosity detailed`.
 
 The built package will be found at `./artifacts/thunderstore/`.
+
+You can directly publish to Thunderstore by including `-p:PublishTS=true` in the command. See the `Config.Build.user.props.template` file for configuration instructions.
+
+> [!TIP]  
+> Make sure the local package looks fine in `./artifacts/thunderstore/` first, then publish with `dotnet build -c Release -p:PublishTS=true -v d` to avoid potential mistakes.
