@@ -5,7 +5,7 @@
 <!--#endif -->
     <TargetFramework>netstandard2.1</TargetFramework>
 <!--#if (!no-tutorial) -->
-    <!-- This is the GUID of your mod. Example: com.github.YourAccount.BepInExTemplate -->
+    <!-- This is the GUID of your mod. Example: YourAccount.BepInExTemplate -->
 <!--#endif -->
     <AssemblyName>_Guid_</AssemblyName>
 <!--#if (!no-tutorial) -->

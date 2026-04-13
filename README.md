@@ -72,7 +72,7 @@ Open a terminal in your _GameName_ modding directory, and run:
 > You should [set up a Thunderstore team first](<https://thunderstore.io/settings/teams/create/>) so you can use its name in the optional `--ts-team` argument so the template can give you a mostly correctly configured packaging setup.
 
 ```sh
-dotnet new _GameNameShortNoSpacesLowercase_mod --output ModName --guid com.github.YourAccount.ModName --ts-team YourThunderstoreTeam
+dotnet new _GameNameShortNoSpacesLowercase_mod --output ModName --guid YourAccount.ModName --ts-team YourThunderstoreTeam
 ```
 
 > [!TIP]  
@@ -91,7 +91,7 @@ You now have a (mostly) working setup. See [Setting Up The Config File](#setting
 This example demonstrates what files should appear and where:
 
 ```sh
-~/Workspace/_GameNameNoSpaces_$ dotnet new _GameNameShortNoSpacesLowercase_mod --output MyCoolMod --guid com.github._TemplateAuthorNoSpaces_.MyCoolMod --ts-team _TemplateAuthorNoSpaces_
+~/Workspace/_GameNameNoSpaces_$ dotnet new _GameNameShortNoSpacesLowercase_mod --output MyCoolMod --guid _TemplateAuthorNoSpaces_.MyCoolMod --ts-team _TemplateAuthorNoSpaces_
 The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
 
 ~/Workspace/_GameNameNoSpaces_$ cd MyCoolMod/

@@ -17,7 +17,7 @@
         "guid": {
             "type": "parameter",
             "displayName": "GUID",
-            "description": "The global identifier for your mod. Example: com.github.YourAccount.ModName",
+            "description": "The global identifier for your mod. Example: YourAccount.ModName",
             "datatype": "text",
             "replaces": "_Guid_",
             "isRequired": "true"
