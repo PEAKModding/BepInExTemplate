@@ -26,7 +26,7 @@
     >
     <RunThunderPipePublishAfterBuild
       Condition="'$(RunThunderPipePublishAfterBuild)' != 'false' And '$(RunThunderPipePackAfterBuild)' == 'true' And '$(PublishTS)' == 'true'"
-    >true</RunThunderPipePublishAfterBuild
+      >true</RunThunderPipePublishAfterBuild
     >
   </PropertyGroup>
 

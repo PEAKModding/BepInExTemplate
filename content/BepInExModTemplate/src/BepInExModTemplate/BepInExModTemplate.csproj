@@ -19,7 +19,7 @@
 <!--#if (!no-tutorial) -->
     <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
 <!--#endif -->
-    <Version>0.1.3</Version>
+    <Version>0.1.0</Version>
     <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
     <!--
         Communities and package categories metadata for publishing with ThunderPipe.
@@ -87,7 +87,6 @@
 <!--#endif -->
     <ThunderstoreDependency Include="BepInEx-BepInExPack" Version="5.4.2305" />
   </ItemGroup>
-
 <!--#if (!no-tutorial) -->
 
   <!--
