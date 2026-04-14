@@ -111,7 +111,7 @@ The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
         ├── MyCoolMod.csproj
         └── Plugin.cs
 
-3 directories, 12 files
+3 directories, 11 files
 ```
 
 - `./src/<project-name>/` contains the C# source files for your mod
