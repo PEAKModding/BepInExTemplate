@@ -52,29 +52,44 @@
 
       3. SETTING YOUR THUNDERSTORE TOKEN FOR THIS PROJECT:
 
-        - If you are on Windows, run the following command in a terminal
-          with YOUR_API_TOKEN as what you just copied (paste it with either Ctrl+V or Ctrl+Shift+V):
-            Set-Secret -Name "service thunderstore team _ts-team_" -Secret YOUR_API_TOKEN
-
-          You can confirm the secret is set correctly by running the following:
-            Get-Secret -AsPlainText -Name "thunderstore team _ts-team_"
-          You are now done.
-
         - If you are on Linux, run the following command in a terminal:
             secret-tool store -l="Token for _ts-team_" service thunderstore team _ts-team_
 
-          Once run, it asks for the secret, so paste the API token with
-          Ctrl+Shift+V (typical for terminal apps) or Ctrl+V depending on your terminal app.
+          Once run, it asks for the secret,
+          so paste the API token with Ctrl+Shift+V or Ctrl+V depending on your terminal app.
           The input may be hidden, which is a feature. Press enter to set the secret.
 
           You can confirm the secret is set correctly by running the following:
             secret-tool lookup service thunderstore team _ts-team_
           You are now done.
 
+        - If you are on Windows:
+          1. Open PowerShell as Admin
+
+          2. Trust 'PSGallery' for installing PowerShell modules by running:
+              Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+          3. Install 'Microsoft.PowerShell.SecretManagement' and 'Microsoft.PowerShell.SecretStore':
+              Install-Module -Name Microsoft.PowerShell.SecretManagement, Microsoft.PowerShell.SecretStore
+            - On 'NuGet provider is required to continue', select: [Y] Yes
+
+          4. Register a default secret vault 'LocalStore':
+              Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; Register-SecretVault -Name LocalStore -ModuleName Microsoft.PowerShell.SecretStore -Default
+
+          5. Configure secret store to not require authentication so it can be used by MSBuild:
+              Set-SecretStoreConfiguration -Authentication None -Interaction None
+
+          6. Set secret with YOUR_API_TOKEN as your Thunderstore token:
+              Set-Secret -Vault LocalStore -Name "service thunderstore team _ts-team_" -Secret YOUR_API_TOKEN
+
+          7. You can confirm the secret is set correctly by running the following:
+              Get-Secret -Vault LocalStore -AsPlainText -Name "service thunderstore team _ts-team_"
+            You are now done.
+
         - If you are on MacOS, good luck.
 
-      4. Was that really it?
-        Yes, that was it.
+      4. Was that all?
+        Yes, that was all.
         Do NOT proceed to paste your Thunderstore API token in this file or anywhere else!
     -->
   </PropertyGroup>
@@ -89,10 +104,10 @@
     <PropertyGroup>
       <ThunderstoreTeamTokenKey>service thunderstore team $(ThunderstoreTeam)</ThunderstoreTeamTokenKey>
       <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Linux'))"
-      >secret-tool lookup $(ThunderstoreTeamTokenKey)</CommandGetSecret
+        >secret-tool lookup $(ThunderstoreTeamTokenKey)</CommandGetSecret
       >
       <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Windows'))"
-      >Get-Secret -AsPlainText -Name "$(ThunderstoreTeamTokenKey)"</CommandGetSecret
+        >powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Secret -Vault LocalStore -AsPlainText -Name '$(ThunderstoreTeamTokenKey)'"</CommandGetSecret
       >
     </PropertyGroup>
     <Exec
