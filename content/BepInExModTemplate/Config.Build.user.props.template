@@ -104,7 +104,7 @@
         >secret-tool lookup $(ThunderstoreTeamTokenKey)</CommandGetSecret
       >
       <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Windows'))"
-        >(Get-StoredCredential -Target '$(ThunderstoreTeamTokenKey)' -AsCredentialObject).Password</CommandGetSecret
+        >powershell -Command "(Get-StoredCredential -Target '$(ThunderstoreTeamTokenKey)' -AsCredentialObject).Password"</CommandGetSecret
       >
     </PropertyGroup>
     <Exec
@@ -112,7 +112,6 @@
       Condition="'$(CommandGetSecret)' != ''"
       ConsoleToMSBuild="true"
       StandardOutputImportance="low"
-      EchoOff="true"
       Timeout="3000"
     >
       <Output TaskParameter="ConsoleOutput" PropertyName="ThunderstoreToken" />
