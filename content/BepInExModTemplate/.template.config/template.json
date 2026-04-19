@@ -1,10 +1,10 @@
 {
     "$schema": "http://json.schemastore.org/template",
-    "author": "_TemplateAuthorNoSpaces_",
+    "author": "_TemplateRepoAuthorNoSpaces_",
     "classifications": [
         "BepInEx", "Plugin", "Mod"
     ],
-    "identity": "com.github._TemplateAuthorNoSpaces_.BepInExTemplate",
+    "identity": "_TemplateRepoAuthorNoSpaces_._TemplatePackageNameNoSpaces_",
     "name": "_GameName_ BepInEx Plugin",
     "shortName": "_GameNameShortNoSpacesLowercase_mod",
     "tags": {
@@ -17,7 +17,7 @@
         "guid": {
             "type": "parameter",
             "displayName": "GUID",
-            "description": "The global identifier for your mod. Example: YourAccount.ModName",
+            "description": "The global identifier for your mod. Example: AuthorName.ModName",
             "datatype": "text",
             "replaces": "_Guid_",
             "isRequired": "true"

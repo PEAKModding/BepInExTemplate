@@ -5,11 +5,11 @@
 <!--#endif -->
     <TargetFramework>netstandard2.1</TargetFramework>
 <!--#if (!no-tutorial) -->
-    <!-- This is the GUID of your mod. Example: YourAccount.BepInExTemplate -->
+    <!-- This is the global identifier for your mod. This should not be changed after release. -->
 <!--#endif -->
     <AssemblyName>_Guid_</AssemblyName>
 <!--#if (!no-tutorial) -->
-    <!-- This is the display name of your mod. Example: BepInEx Template -->
+    <!-- This is the display name of your mod. -->
 <!--#endif -->
     <AssemblyTitle>BepInExModTemplate</AssemblyTitle>
 <!--#if (!no-tutorial) -->
@@ -85,7 +85,7 @@
             that must be done separately with PackageReference items.
     -->
 <!--#endif -->
-    <ThunderstoreDependency Include="BepInEx-BepInExPack" Version="5.4.2305" />
+    <ThunderstoreDependency Include="_BepInExPackFullName_" Version="_BepInExPackVersion_" />
   </ItemGroup>
 <!--#if (!no-tutorial) -->
 

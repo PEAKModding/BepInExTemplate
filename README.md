@@ -25,7 +25,7 @@
 Run the following command:
 
 ```bash
-dotnet new install _TemplateAuthorNoSpaces_.BepInExTemplate
+dotnet new install _TemplateNuGetPackagePrefixNoSpaces_._TemplatePackageNameNoSpaces_
 ```
 
 > [!TIP]  
@@ -84,7 +84,7 @@ You now have a (mostly) working setup. See [Setting Up The Config File](#setting
 This example demonstrates what files should appear and where:
 
 ```sh
-~/Workspace/_GameNameNoSpaces_$ dotnet new _GameNameShortNoSpacesLowercase_mod --output MyCoolMod --guid _TemplateAuthorNoSpaces_.MyCoolMod --ts-team _TemplateAuthorNoSpaces_
+~/Workspace/_GameNameNoSpaces_$ dotnet new _GameNameShortNoSpacesLowercase_mod --output MyCoolMod --guid _TemplateRepoAuthorNoSpaces_.MyCoolMod --ts-team _TemplateRepoAuthorNoSpaces_
 The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
 
 ~/Workspace/_GameNameNoSpaces_$ cd MyCoolMod/
