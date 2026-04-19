@@ -66,24 +66,14 @@
         - If you are on Windows:
           1. Open PowerShell as Admin
 
-          2. Trust 'PSGallery' for installing PowerShell modules by running:
-              Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          2. Install 'CredentialManager':
+              Install-Module -Name CredentialManager
 
-          3. Install 'Microsoft.PowerShell.SecretManagement' and 'Microsoft.PowerShell.SecretStore':
-              Install-Module -Name Microsoft.PowerShell.SecretManagement, Microsoft.PowerShell.SecretStore
-            - On 'NuGet provider is required to continue', select: [Y] Yes
+          3. Set secret with YOUR_API_TOKEN as your Thunderstore token:
+              New-StoredCredential -Persist LocalMachine -Target 'service thunderstore team _ts-team_' -Password YOUR_API_TOKEN
 
-          4. Register a default secret vault 'LocalStore':
-              Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force; Register-SecretVault -Name LocalStore -ModuleName Microsoft.PowerShell.SecretStore -Default
-
-          5. Configure secret store to not require authentication so it can be used by MSBuild:
-              Set-SecretStoreConfiguration -Authentication None -Interaction None
-
-          6. Set secret with YOUR_API_TOKEN as your Thunderstore token:
-              Set-Secret -Vault LocalStore -Name "service thunderstore team _ts-team_" -Secret YOUR_API_TOKEN
-
-          7. You can confirm the secret is set correctly by running the following:
-              Get-Secret -Vault LocalStore -AsPlainText -Name "service thunderstore team _ts-team_"
+          4. You can confirm the secret is set correctly by running the following:
+              (Get-StoredCredential -Target 'service thunderstore team _ts-team_' -AsCredentialObject).Password
             You are now done.
 
         - If you are on MacOS, good luck.
@@ -107,7 +97,7 @@
         >secret-tool lookup $(ThunderstoreTeamTokenKey)</CommandGetSecret
       >
       <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Windows'))"
-        >powershell -NoProfile -ExecutionPolicy Bypass -Command "Get-Secret -Vault LocalStore -AsPlainText -Name '$(ThunderstoreTeamTokenKey)'"</CommandGetSecret
+        >(Get-StoredCredential -Target '$(ThunderstoreTeamTokenKey)' -AsCredentialObject).Password</CommandGetSecret
       >
     </PropertyGroup>
     <Exec
@@ -116,6 +106,7 @@
       ConsoleToMSBuild="true"
       StandardOutputImportance="low"
       EchoOff="true"
+      Timeout="3000"
     >
       <Output TaskParameter="ConsoleOutput" PropertyName="ThunderstoreToken" />
     </Exec>
