@@ -10,15 +10,8 @@
     - [Thunderstore Packaging \& Publishing](#thunderstore-packaging--publishing)
     - [GitHub Actions Publishing](#github-actions-publishing)
 
-Template creator: After forking, replace the following, e.g.:
-
-- `_GameName_` → `Lethal Company` (name from Steam directory)
-- `_GameNameNoSpaces_` → `LethalCompany` (name with spaces removed)
-- `_GameNameShortNoSpacesLowercase_` → `lc` (used for template `shortName`)
-- `_TemplateAuthorNoSpaces_` → `LethalCompanyModding` (GitHub repo & NuGet package prefix)
-- `_ThunderstoreGameIdentifier_` → `lethal-company` (see: <https://thunderstore.io/api/experimental/community/>)
-
-You can then remove this section from the README.
+> [!TIP]  
+> Looking to create a template like this? See [FORKING.md](./FORKING.md)
 
 ## Installing
 
