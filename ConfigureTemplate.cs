@@ -56,19 +56,20 @@ var stringsToReplace = new Dictionary<string, string>()
 };
 
 var thisFileName = "ConfigureTemplate.cs";
-var currentDir = Directory.GetCurrentDirectory();
-if (!File.Exists(Path.Combine(currentDir, thisFileName)))
+var dir = Directory.GetCurrentDirectory();
+if (!File.Exists(Path.Combine(dir, thisFileName)))
 {
     throw new InvalidOperationException(
-        $"Current directory '{currentDir}' must contain this script '{thisFileName}'"
+        $"Current directory '{dir}' must contain this script '{thisFileName}'"
     );
 }
 
-foreach (
-    var filePath in Directory
-        .EnumerateFiles(Path.Combine(currentDir, "src"), "*", SearchOption.AllDirectories)
-        .Concat([Path.Combine(currentDir, "README.md")])
-)
+RenameFileSystemEntriesRecursive(Path.Combine(dir, "tests"));
+
+var src = Directory.EnumerateFiles(Path.Combine(dir, "src"), "*", SearchOption.AllDirectories);
+var tests = Directory.EnumerateFiles(Path.Combine(dir, "tests"), "*", SearchOption.AllDirectories);
+
+foreach (var filePath in src.Concat(tests).Concat([Path.Combine(dir, "README.md")]))
 {
     var fileName = Path.GetFileName(filePath);
 
@@ -92,9 +93,41 @@ foreach (
 
     if (text != originalText)
     {
-        var relativePath = Path.GetRelativePath(currentDir, filePath);
+        var relativePath = Path.GetRelativePath(dir, filePath);
         Console.WriteLine($"Replaced strings in file '{relativePath}'");
         File.WriteAllText(filePath, text);
+    }
+}
+
+void RenameFileSystemEntriesRecursive(string path)
+{
+    var subDir = Directory.EnumerateFileSystemEntries(path, "*", SearchOption.TopDirectoryOnly);
+    foreach (var entryPath in subDir)
+    {
+        var entryName = Path.GetFileName(entryPath);
+
+        var newEntryName = entryName;
+        foreach (var (from, to) in stringsToReplace)
+        {
+            newEntryName = newEntryName.Replace(from, to, StringComparison.Ordinal);
+        }
+        var newEntryPath = Path.Combine(Path.GetDirectoryName(entryPath) ?? "", newEntryName);
+
+        if (newEntryPath != entryPath)
+        {
+            var relativePath = Path.GetRelativePath(dir, entryPath);
+            Console.WriteLine($"Renamed filesystem entry '{relativePath}' => '{newEntryName}'");
+
+            if (File.Exists(entryPath))
+                Directory.Move(entryPath, newEntryPath);
+            else
+                Directory.Move(entryPath, newEntryPath);
+        }
+
+        if (Directory.Exists(entryPath))
+        {
+            RenameFileSystemEntriesRecursive(newEntryPath);
+        }
     }
 }
 

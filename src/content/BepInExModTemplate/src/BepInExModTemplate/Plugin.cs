@@ -13,8 +13,8 @@ namespace BepInExModTemplate;
 // The BepInAutoPlugin attribute comes from the Hamunii.BepInEx.AutoPlugin
 // NuGet package, and it will generate the BepInPlugin attribute for you!
 // For more info, see https://github.com/Hamunii/BepInEx.AutoPlugin
-//#endif
 
+//#endif
 /// <summary>
 /// The BepInEx plugin class of BepInExModTemplate.
 /// </summary>

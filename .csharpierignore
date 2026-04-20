@@ -1,5 +1,3 @@
 # Ignore everything because some template stuff
 # does not conform to standard formatting.
-*
-
-!ConfigureTemplate.cs
+/src/
