@@ -28,4 +28,4 @@ jobs:
           dotnet pack -c Release
 
       - name: Run Snapshot Tests
-        run: dotnet test -c Release --no-build
+        run: dotnet test -c Release
