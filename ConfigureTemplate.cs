@@ -36,11 +36,15 @@ const string BepInExPackVersion = "5.4.2305";
 // A valid TFM https://learn.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-frameworks
 const string PluginTargetFramework = "netstandard2.1";
 
+// NuGet GameLibs package as a fallback if local references aren't found or used
+const string GameLibsPackage = "LethalCompany.GameLibs.Steam";
+const string GameLibsVersion = "*-*";
+
 // After configuration is done, execute this script with `dotnet run ConfigureTemplate.cs`.
 // The rest of the script should be ignored.
 // ================================================================================================
 
-var stringsToReplace = new Dictionary<string, string>()
+var stringsToReplace = new Dictionary<string, string>(StringComparer.Ordinal)
 {
     { "_GameName_", GameName },
     { "_GameNameNoSpaces_", GameNameNoSpaces },
@@ -53,6 +57,10 @@ var stringsToReplace = new Dictionary<string, string>()
     { "_ThunderstoreGameIdentifier_", ThunderstoreGameIdentifier },
     { "_BepInExPackFullName_", BepInExPackFullName },
     { "_BepInExPackVersion_", BepInExPackVersion },
+    {
+        "<PackageReference Include=\"UnityEngine.Modules\" Version=\"6000.0.36\" PrivateAssets=\"all\" />",
+        $"<PackageReference Include=\"{GameLibsPackage}\" Version=\"{GameLibsVersion}\" PrivateAssets=\"all\" />"
+    },
 };
 
 var thisFileName = "ConfigureTemplate.cs";
