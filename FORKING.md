@@ -1,6 +1,6 @@
 # Forking
 
-In this file, you will find instructions on forking the template base project <https://github.com/Hamunii/BepInExTemplateBase>.
+In this file, you will find instructions on forking the template base project: <https://github.com/Hamunii/BepInExTemplateBase>.
 
 If the repository you're looking at this file in is a fork itself, see the latest instructions here: [Hamunii/BepInExTemplateBase/FORKING.md](<https://github.com/Hamunii/BepInExTemplateBase/blob/main/FORKING.md>).
 
