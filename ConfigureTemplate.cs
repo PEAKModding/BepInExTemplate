@@ -56,7 +56,7 @@ var stringsToReplace = new Dictionary<string, string>()
 };
 
 var thisFileName = "ConfigureTemplate.cs";
-var currentDir = AppContext.BaseDirectory;
+var currentDir = Directory.GetCurrentDirectory();
 if (!File.Exists(Path.Combine(currentDir, thisFileName)))
 {
     throw new InvalidOperationException(
