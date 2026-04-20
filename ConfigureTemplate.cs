@@ -11,6 +11,9 @@ const string GameNameNoSpaces = "LethalCompany";
 // Used for template `shortName`. Determines the command for dotnet new, e.g. dotnet new lcmod
 const string GameNameShortNoSpacesLowercase = "lc";
 
+// A comma-separated list of the Template NuGet package authors
+const string TemplateAuthors = "Robyn, Hamunii";
+
 // The GitHub account name of the owner of the repo
 const string TemplateRepoAuthorNoSpaces = "LethalCompanyModding";
 
@@ -41,10 +44,11 @@ var stringsToReplace = new Dictionary<string, string>()
     { "_GameName_", GameName },
     { "_GameNameNoSpaces_", GameNameNoSpaces },
     { "_GameNameShortNoSpacesLowercase_", GameNameShortNoSpacesLowercase },
+    { "_TemplateAuthors_", TemplateAuthors },
     { "_TemplateRepoAuthorNoSpaces_", TemplateRepoAuthorNoSpaces },
     { "_TemplateNuGetPackagePrefixNoSpaces_", TemplateNuGetPackagePrefixNoSpaces },
-    { "_TemplatePackageProjectUrl_", TemplatePackageProjectUrl },
     { "_TemplatePackageNameNoSpaces_", TemplatePackageNameNoSpaces },
+    { "_TemplatePackageProjectUrl_", TemplatePackageProjectUrl },
     { "_ThunderstoreGameIdentifier_", ThunderstoreGameIdentifier },
     { "_BepInExPackFullName_", BepInExPackFullName },
     { "_BepInExPackVersion_", BepInExPackVersion },
