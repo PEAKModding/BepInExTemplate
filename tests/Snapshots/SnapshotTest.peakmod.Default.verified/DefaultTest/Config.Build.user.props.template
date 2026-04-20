@@ -10,10 +10,10 @@
   <!-- User properties -->
   <PropertyGroup>
     <!-- Set if the default steam game install directory doesn't work. -->
-    <!-- <_GameNameNoSpaces_GameRootDir></_GameNameNoSpaces_GameRootDir> -->
+    <!-- <PEAKGameRootDir></PEAKGameRootDir> -->
 
     <!-- Set if your BepInEx/ directory isn't in the game files. -->
-    <!-- <_GameNameNoSpaces_BepInExDir></_GameNameNoSpaces_BepInExDir> -->
+    <!-- <PEAKBepInExDir></PEAKBepInExDir> -->
 
     <!-- Enable/disable deploying mod files to BepInEx directory. -->
     <DeployThunderstoreFiles>true</DeployThunderstoreFiles>
