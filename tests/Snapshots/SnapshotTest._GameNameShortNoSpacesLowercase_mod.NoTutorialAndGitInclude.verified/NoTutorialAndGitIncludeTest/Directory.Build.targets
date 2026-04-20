@@ -1,0 +1,73 @@
+<Project>
+  <Sdk Name="ThunderPipe.Sdk" Version="0.1.3" />
+
+  <PropertyGroup>
+    <!-- Set additional NuGet sources -->
+    <RestoreAdditionalProjectSources>
+      https://nuget.bepinex.dev/v3/index.json;
+      https://nuget.windows10ce.com/nuget/v3/index.json
+    </RestoreAdditionalProjectSources>
+    <RunThunderPipePackAfterBuild
+      Condition="'$(RunThunderPipePackAfterBuild)' != 'false' And '$(IsThunderstorePackable)' == 'true' And '$(Configuration)' == 'Release'"
+      >true</RunThunderPipePackAfterBuild
+    >
+    <RunThunderPipePublishAfterBuild
+      Condition="'$(RunThunderPipePublishAfterBuild)' != 'false' And '$(RunThunderPipePackAfterBuild)' == 'true' And '$(PublishTS)' == 'true'"
+      >true</RunThunderPipePublishAfterBuild
+    >
+  </PropertyGroup>
+
+  <!-- Build dependencies -->
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" PrivateAssets="all" />
+    <PackageReference Include="Hamunii.BepInEx.AutoPlugin" Version="2.1.*" PrivateAssets="all" />
+    <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Modding dependencies -->
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <!-- In reality BepInEx 5.4.21 ships HarmonyX 2.9 but BepInEx.Core gives us 2.7 -->
+    <PackageReference Include="HarmonyX" Version="2.9.0" />
+  </ItemGroup>
+
+  <!-- NuGet fallback stripped game references -->
+  <ItemGroup Condition="!Exists('$(ManagedDir)')">
+    <PackageReference Include="UnityEngine.Modules" Version="6000.0.36" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Local game references -->
+  <ItemGroup Condition="Exists('$(ManagedDir)')">
+    <LocalReferences
+      Include="$(ManagedDir)*.dll"
+      Exclude="$(ManagedDir)Mono*.dll;$(ManagedDir)netstandard.dll;$(ManagedDir)System*.dll;$(ManagedDir)mscorlib.dll"
+    />
+    <Reference Include="@(LocalReferences)" Private="false" />
+    <Reference Include="$(ManagedDir)Assembly-CSharp.dll" Private="false" Publicize="true" />
+  </ItemGroup>
+
+  <!-- Copy mod files defined in projects to the target BepInEx directory -->
+  <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployThunderstoreFiles)' == 'true'">
+    <PropertyGroup>
+      <_TargetDir>$([MSBuild]::NormalizeDirectory($(_GameNameNoSpaces_BepInExDir)))</_TargetDir>
+    </PropertyGroup>
+    <Message
+      Text="Deploy → @(ThunderstoreFile -> '%(Destination)%(FileName)%(Extension)')"
+      Importance="High"
+    />
+    <Error
+      Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure _GameNameNoSpaces_BepInExDir to point to a valid path in the Config.Build.user.props file."
+      Condition="!Exists('$(_TargetDir)')"
+    />
+    <Copy SourceFiles="@(ThunderstoreFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
+  </Target>
+
+  <Target
+    Name="EnsureReleaseOnPublishTS"
+    BeforeTargets="ThunderPipePublish"
+    Condition="'$(RunThunderPipePublishAfterBuild)' == 'true' And '$(Configuration)' != 'Release'"
+  >
+    <Error Text="Release configuration must be used when publishing Thunderstore package." />
+  </Target>
+</Project>

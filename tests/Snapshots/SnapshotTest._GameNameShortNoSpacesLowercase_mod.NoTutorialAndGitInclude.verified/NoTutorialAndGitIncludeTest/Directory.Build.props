@@ -1,0 +1,41 @@
+﻿<Project>
+  <PropertyGroup>
+    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
+  </PropertyGroup>
+
+  <!-- Import our shared user configuration file -->
+  <Import
+    Project="$(SolutionRoot)Config.Build.user.props"
+    Condition="Exists('$(SolutionRoot)Config.Build.user.props')"
+  />
+
+  <!-- Shared Thunderstore metadata -->
+  <PropertyGroup>
+    <ThunderstoreTeam>Test_Team</ThunderstoreTeam>
+    <!-- TODO: Add a link to your mod repository here (optional) -->
+    <RepositoryUrl></RepositoryUrl>
+  </PropertyGroup>
+
+  <!-- Shared primary configuration for the project -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>recommended</AnalysisMode>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+  </PropertyGroup>
+
+  <!-- Shared custom props -->
+  <PropertyGroup>
+    <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Linux'))">$(HOME)/.local/share/</PathBeforeSteam>
+    <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(MSBuildProgramFiles32)/</PathBeforeSteam>
+    <_GameNameNoSpaces_GameRootDir Condition="$(_GameNameNoSpaces_GameRootDir) == ''">$(PathBeforeSteam)Steam/steamapps/common/_GameName_/</_GameNameNoSpaces_GameRootDir>
+    <_GameNameNoSpaces_BepInExDir Condition="$(_GameNameNoSpaces_BepInExDir) == ''">$(_GameNameNoSpaces_GameRootDir)/BepInEx/</_GameNameNoSpaces_BepInExDir>
+    <ManagedDir>$(_GameNameNoSpaces_GameRootDir)/_GameName__Data/Managed/</ManagedDir>
+  </PropertyGroup>
+</Project>

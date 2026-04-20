@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <AssemblyName>AuthorName.ModName</AssemblyName>
+    <AssemblyTitle>NoTutorialAndGitIncludeTest</AssemblyTitle>
+    <ThunderstoreName>NoTutorialAndGitIncludeTest</ThunderstoreName>
+    <Version>0.1.0</Version>
+    <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
+    <!--
+        Communities and package categories metadata for publishing with ThunderPipe.
+        Communities: https://thunderstore.io/api/experimental/community/
+        Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
+    -->
+    <ThunderstoreCommunities>_ThunderstoreGameIdentifier_</ThunderstoreCommunities>
+    <ThunderstoreCategories>mods</ThunderstoreCategories>
+    <IsThunderstorePackable>true</IsThunderstorePackable>
+  </PropertyGroup>
+
+  <!--
+    Define mod files to copy to the relative BepInEx directory after build
+    and where they are packed to when building a Thunderstore package
+  -->
+  <ItemGroup>
+    <ThunderstoreFile Include="$(TargetPath)" Destination="plugins/" />
+  </ItemGroup>
+
+  <!-- Thunderstore package metadata -->
+  <ItemGroup>
+    <ThunderstorePackageFile Include="$(SolutionRoot)README.md" />
+    <ThunderstorePackageFile Include="$(SolutionRoot)CHANGELOG.md" />
+    <ThunderstorePackageFile Include="$(SolutionRoot)icon.png" />
+    <ThunderstorePackageFile Include="$(SolutionRoot)LICENSE" />
+
+    <ThunderstoreDependency Include="_BepInExPackFullName_" Version="_BepInExPackVersion_" />
+  </ItemGroup>
+</Project>

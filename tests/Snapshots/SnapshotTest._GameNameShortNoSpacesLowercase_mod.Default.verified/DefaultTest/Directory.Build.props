@@ -1,0 +1,57 @@
+﻿<Project>
+  <!--
+    This is a special file that contains shared configuration
+    for all project files in subdirectories.
+  -->
+
+  <PropertyGroup>
+    <!-- Define a variable that points to this directory. -->
+    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
+  </PropertyGroup>
+
+  <!-- Import our shared user configuration file -->
+  <Import
+    Project="$(SolutionRoot)Config.Build.user.props"
+    Condition="Exists('$(SolutionRoot)Config.Build.user.props')"
+  />
+
+  <!-- Shared Thunderstore metadata -->
+  <PropertyGroup>
+    <ThunderstoreTeam>Test_Team</ThunderstoreTeam>
+    <!-- TODO: Add a link to your mod repository here (optional) -->
+    <RepositoryUrl></RepositoryUrl>
+  </PropertyGroup>
+
+  <!-- Shared primary configuration for the project -->
+  <PropertyGroup>
+    <!-- Use latest C# version. -->
+    <LangVersion>latest</LangVersion>
+    <!-- See: https://learn.microsoft.com/en-us/dotnet/csharp/nullable-references -->
+    <Nullable>enable</Nullable>
+    <!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisMode>recommended</AnalysisMode>
+    <!-- Build, and other generated files go nicely into artifacts/ directory. -->
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+    <!-- Enable debug symbols. This will show source code line numbers in stack traces. -->
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <!-- Substitute full path to this directory with ./, hiding it from debug symbols. -->
+    <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
+  </PropertyGroup>
+
+  <!-- Shared custom props -->
+  <PropertyGroup>
+    <!--
+      Default values for paths. Do not modify,
+      instead configure your Config.Build.user.props file.
+    -->
+    <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Linux'))">$(HOME)/.local/share/</PathBeforeSteam>
+    <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(MSBuildProgramFiles32)/</PathBeforeSteam>
+    <_GameNameNoSpaces_GameRootDir Condition="$(_GameNameNoSpaces_GameRootDir) == ''">$(PathBeforeSteam)Steam/steamapps/common/_GameName_/</_GameNameNoSpaces_GameRootDir>
+    <_GameNameNoSpaces_BepInExDir Condition="$(_GameNameNoSpaces_BepInExDir) == ''">$(_GameNameNoSpaces_GameRootDir)/BepInEx/</_GameNameNoSpaces_BepInExDir>
+    <ManagedDir>$(_GameNameNoSpaces_GameRootDir)/_GameName__Data/Managed/</ManagedDir>
+  </PropertyGroup>
+</Project>

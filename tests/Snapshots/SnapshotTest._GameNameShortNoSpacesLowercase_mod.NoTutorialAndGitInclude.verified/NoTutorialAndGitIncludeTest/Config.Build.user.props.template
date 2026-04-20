@@ -1,0 +1,120 @@
+<!--
+  INSTRUCTIONS: Copy this template file and name it 'Config.Build.user.props'!
+                Otherwise the values aren't read.
+                Do not remove this file from git; this exists for everyone else
+                to use as a template for their user-specific configuration.
+                The copy 'Config.Build.user.props' is gitignored and should not
+                be tracked by git.
+-->
+<Project>
+  <!-- User properties -->
+  <PropertyGroup>
+    <!-- Set if the default steam game install directory doesn't work. -->
+    <!-- <_GameNameNoSpaces_GameRootDir></_GameNameNoSpaces_GameRootDir> -->
+
+    <!-- Set if your BepInEx/ directory isn't in the game files. -->
+    <!-- <_GameNameNoSpaces_BepInExDir></_GameNameNoSpaces_BepInExDir> -->
+
+    <!-- Enable/disable deploying mod files to BepInEx directory. -->
+    <DeployThunderstoreFiles>true</DeployThunderstoreFiles>
+  </PropertyGroup>
+
+  <!--
+    Configuring Thunderstore API token for uploading to Thunderstore:
+
+    NOTE: If you have done this before on this PC for this Thunderstore team (Test_Team),
+          you don't need to do this again! Meaning that you can ignore these instructions.
+
+    0. Do I need to configure a Thunderstore API token?
+      No, unless if you are the author and want to upload this
+      project's Thunderstore package(s) to Thunderstore when running:
+      dotnet build -c Release -p:PublishTS=true -v d
+
+    1. Context:
+      We fetch your Thunderstore API token via a proxy key to prevent your
+      real token from getting leaked if it accidentally ends up on e.g. GitHub.
+      Leaking the real token would give anyone full access to your Thunderstore team.
+
+      For the proxy, we use secret-tool on Linux, and CredentialManager on Windows.
+      https://man.archlinux.org/man/secret-tool.1.en
+      https://www.powershellgallery.com/packages/CredentialManager/2.0
+
+      Below is a target named 'EnsureThunderstoreToken'; this fetches the real
+      Thunderstore API token from the proxy with the key $(ThunderstoreTeamTokenKey) (do not modify it).
+
+    2. GETTING YOUR THUNDERSTORE TOKEN:
+      Log in to https://thunderstore.io/
+        > Settings
+        > Teams
+        > [select your team, create new if necessary]
+        > Service Accounts
+        > Add Service Account
+        > [name it something like 'local' and confirm]
+        > [keep the page open until you need to copy and paste the api token in the next step]
+
+    3. SETTING YOUR THUNDERSTORE TOKEN FOR THIS PROJECT:
+
+      - If you are on Linux:
+        1. Open a terminal
+
+        2. If `secret-tool` command is not found, install 'libsecret' to provide it
+
+        3. Paste your Thunderstore token as input for the following command:
+            secret-tool store -l="Token for Test_Team" service thunderstore team Test_Team
+
+          Note: pasting can be done with Ctrl+Shift+V or Ctrl+V depending on your terminal app.
+          The input may be hidden, which is a feature. Press enter to set the secret.
+
+        4. You can confirm the secret is set correctly by running the following:
+            secret-tool lookup service thunderstore team Test_Team
+
+        You are now done.
+
+      - If you are on Windows:
+        1. Open PowerShell terminal as Admin
+
+        2. Install 'CredentialManager' (copy and paste into PowerShell terminal):
+            Install-Module -Name CredentialManager
+
+        3. Set password as your Thunderstore token when running the following command:
+            New-StoredCredential -Persist LocalMachine -Target 'service thunderstore team Test_Team' -Password YOUR_API_TOKEN
+
+        4. You can confirm the secret is set correctly by running the following:
+            (Get-StoredCredential -Target 'service thunderstore team Test_Team' -AsCredentialObject).Password
+
+        You are now done.
+
+      - If you are on MacOS, good luck.
+
+    4. Was that all?
+      Yes, that was all.
+      Do NOT proceed to paste your Thunderstore API token in this file or anywhere else!
+  -->
+
+  <!-- Do not modify unless if you know what you're doing. -->
+  <Target
+    Name="EnsureThunderstoreToken"
+    AfterTargets="Build"
+    BeforeTargets="ThunderPipePublish"
+    Condition="'$(ThunderstoreToken)' == '' And '$(RunThunderPipePublishAfterBuild)' == 'true'"
+  >
+    <PropertyGroup>
+      <ThunderstoreTeamTokenKey>service thunderstore team $(ThunderstoreTeam)</ThunderstoreTeamTokenKey>
+      <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Linux'))"
+        >secret-tool lookup $(ThunderstoreTeamTokenKey)</CommandGetSecret
+      >
+      <CommandGetSecret Condition="$([MSBuild]::IsOSPlatform('Windows'))"
+        >powershell -Command "(Get-StoredCredential -Target '$(ThunderstoreTeamTokenKey)' -AsCredentialObject).Password"</CommandGetSecret
+      >
+    </PropertyGroup>
+    <Exec
+      Command="$(CommandGetSecret)"
+      Condition="'$(CommandGetSecret)' != ''"
+      ConsoleToMSBuild="true"
+      StandardOutputImportance="low"
+      Timeout="3000"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="ThunderstoreToken" />
+    </Exec>
+  </Target>
+</Project>

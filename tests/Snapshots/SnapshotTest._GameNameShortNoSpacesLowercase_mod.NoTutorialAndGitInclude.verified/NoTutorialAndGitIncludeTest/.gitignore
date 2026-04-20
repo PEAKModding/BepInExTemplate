@@ -1,0 +1,39 @@
+﻿# Ignore everything on root level
+/*
+
+# Ignore always
+*.csproj.user
+*.user.props
+bin/
+obj/
+
+# Add source files
+!/src/
+!/tests/
+
+# Example: Unity Project for building Asset Bundles
+# /src/UnityProject/*
+# /src/UnityProject/Assets/*
+# !/src/UnityProject/Assets/
+# !/src/UnityProject/Assets/_Mod/
+
+# Config files
+!/.config/
+/.config/*
+!/.config/dotnet-tools.json
+
+!/.github/
+
+# Add root level files
+!/.csharpierignore
+!/.editorconfig
+!/.gitignore
+!/Config.Build.user.props.template
+!/CONTRIBUTING.md
+!/Directory.Build.props
+!/Directory.Build.targets
+!/global.json
+!/icon.png
+!/LICENSE
+!/NoTutorialAndGitIncludeTest.slnx
+!/README.md
