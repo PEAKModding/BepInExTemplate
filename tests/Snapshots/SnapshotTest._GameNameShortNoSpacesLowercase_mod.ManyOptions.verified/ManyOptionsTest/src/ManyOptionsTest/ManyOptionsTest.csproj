@@ -4,7 +4,6 @@
     <AssemblyName>AuthorName.ModName</AssemblyName>
     <AssemblyTitle>ManyOptionsTest</AssemblyTitle>
     <ThunderstoreName>ManyOptionsTest</ThunderstoreName>
-    <Version>0.1.0</Version>
     <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
     <!--
         Communities and package categories metadata for publishing with ThunderPipe.
