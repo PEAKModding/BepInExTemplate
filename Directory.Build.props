@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
     <UseArtifactsOutput>true</UseArtifactsOutput>
+    <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
   </PropertyGroup>
 </Project>

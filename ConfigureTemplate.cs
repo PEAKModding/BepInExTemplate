@@ -64,11 +64,13 @@ if (!File.Exists(Path.Combine(currentDir, thisFileName)))
     );
 }
 
-foreach (var filePath in Directory.EnumerateFiles("", "*", SearchOption.AllDirectories))
+foreach (
+    var filePath in Directory
+        .EnumerateFiles(Path.Combine(currentDir, "src"), "*", SearchOption.AllDirectories)
+        .Concat([Path.Combine(currentDir, "README.md")])
+)
 {
     var fileName = Path.GetFileName(filePath);
-    if (fileName == thisFileName)
-        continue;
 
     var originalText = File.ReadAllText(filePath);
     var text = originalText;
