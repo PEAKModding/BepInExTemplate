@@ -1,12 +1,12 @@
 {
     "$schema": "http://json.schemastore.org/template",
-    "author": "_TemplateRepoAuthorNoSpaces_",
+    "author": "PEAKModding",
     "classifications": [
         "BepInEx", "Plugin", "Mod"
     ],
-    "identity": "_TemplateRepoAuthorNoSpaces_._TemplatePackageNameNoSpaces_",
-    "name": "_GameName_ BepInEx Plugin",
-    "shortName": "_GameNameShortNoSpacesLowercase_mod",
+    "identity": "PEAKModding.BepInExTemplate",
+    "name": "PEAK BepInEx Plugin",
+    "shortName": "peakmod",
     "tags": {
         "language": "C#",
         "type": "project"

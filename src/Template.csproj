@@ -4,12 +4,12 @@
     <!-- The package metadata. Fill in the properties marked as TODO below -->
     <!-- Follow the instructions on
     https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices -->
-    <PackageId>_TemplateNuGetPackagePrefixNoSpaces_._TemplatePackageNameNoSpaces_</PackageId>
-    <Title>_GameName_ BepInEx Template</Title>
-    <Authors>_TemplateAuthors_</Authors>
-    <Description>A BepInEx template for making mods for _GameName_</Description>
-    <PackageTags>dotnet new; template; BepInEx; _GameName_</PackageTags>
-    <PackageProjectUrl>_TemplatePackageProjectUrl_</PackageProjectUrl>
+    <PackageId>PEAKModding.BepInExTemplate</PackageId>
+    <Title>PEAK BepInEx Template</Title>
+    <Authors>Robyn, Hamunii</Authors>
+    <Description>A BepInEx template for making mods for PEAK</Description>
+    <PackageTags>dotnet new; template; BepInEx; PEAK</PackageTags>
+    <PackageProjectUrl>https://github.com/PEAKModding/BepInExTemplate</PackageProjectUrl>
     <!-- Publish the repository URL in the built .nupkg (in the NuSpec <repository> element) -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>CC0-1.0</PackageLicenseExpression>
