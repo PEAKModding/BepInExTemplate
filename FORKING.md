@@ -65,6 +65,6 @@ You can either use one of the two workflows which are "rebasing" and "merging".
 
 The rebase workflow will keep your repository history closer with upstream, which may be desirable to help understand how your fork modifies the template.
 
-If your template does not deviate much from upstream for other than the [ConfigureTemplate.cs](./ConfigureTemplate.cs) file changes, you may get away with less rebase conflicts if you just rebase those changes to upstream and applying the changes of the [ConfigureTemplate.cs](./ConfigureTemplate.cs) script them again.
+If your template does not deviate much from upstream for other than the [ConfigureTemplate.cs](./ConfigureTemplate.cs) file changes, you may get away with less rebase conflicts if you just rebase those changes to upstream and apply the changes of the [ConfigureTemplate.cs](./ConfigureTemplate.cs) script again.
 
 The above workflow is especially useful for maintaining multiple game-specific templates.
