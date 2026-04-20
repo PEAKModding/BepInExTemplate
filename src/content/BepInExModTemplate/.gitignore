@@ -29,6 +29,7 @@ obj/
 !/.csharpierignore
 !/.editorconfig
 !/.gitignore
+!/CHANGELOG.md
 !/Config.Build.user.props.template
 !/CONTRIBUTING.md
 !/Directory.Build.props
@@ -36,8 +37,8 @@ obj/
 !/global.json
 !/icon.png
 !/LICENSE
-!/BepInExModTemplate.slnx
 !/README.md
+!/BepInExModTemplate.slnx
 #else
 # Created by https://www.toptal.com/developers/gitignore/api/csharp
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp

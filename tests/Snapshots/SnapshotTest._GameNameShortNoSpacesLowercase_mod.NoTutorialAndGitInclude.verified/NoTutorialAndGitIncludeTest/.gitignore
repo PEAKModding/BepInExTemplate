@@ -28,6 +28,7 @@ obj/
 !/.csharpierignore
 !/.editorconfig
 !/.gitignore
+!/CHANGELOG.md
 !/Config.Build.user.props.template
 !/CONTRIBUTING.md
 !/Directory.Build.props
@@ -35,5 +36,5 @@ obj/
 !/global.json
 !/icon.png
 !/LICENSE
-!/NoTutorialAndGitIncludeTest.slnx
 !/README.md
+!/NoTutorialAndGitIncludeTest.slnx
