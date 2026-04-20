@@ -127,9 +127,9 @@ void RenameFileSystemEntriesRecursive(string path)
             Console.WriteLine($"Renamed filesystem entry '{relativePath}' => '{newEntryName}'");
 
             if (File.Exists(entryPath))
-                Directory.Move(entryPath, newEntryPath);
+                MoveOrMergeOverwrite(entryPath, newEntryPath);
             else
-                Directory.Move(entryPath, newEntryPath);
+                MoveOrMergeOverwrite(entryPath, newEntryPath);
         }
 
         if (Directory.Exists(entryPath))
@@ -137,6 +137,30 @@ void RenameFileSystemEntriesRecursive(string path)
             RenameFileSystemEntriesRecursive(newEntryPath);
         }
     }
+}
+
+void MoveOrMergeOverwrite(string sourceDirName, string destDirName)
+{
+    if (!Directory.Exists(destDirName))
+    {
+        Directory.Move(sourceDirName, destDirName);
+        return;
+    }
+
+    foreach (var file in Directory.EnumerateFiles(sourceDirName))
+    {
+        var fileName = Path.GetFileName(file);
+        var dest = Path.Combine(destDirName, fileName);
+        File.Move(file, dest, overwrite: true);
+    }
+
+    foreach (var dir in Directory.EnumerateDirectories(sourceDirName))
+    {
+        var dirName = Path.GetFileName(dir);
+        MoveOrMergeOverwrite(dir, Path.Combine(destDirName, dirName));
+    }
+
+    Directory.Delete(sourceDirName);
 }
 
 Console.WriteLine($"Press any key to close");
