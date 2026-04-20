@@ -5,7 +5,6 @@
     <!-- Follow the instructions on
     https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices -->
     <PackageId>_TemplateNuGetPackagePrefixNoSpaces_._TemplatePackageNameNoSpaces_</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
     <Title>_GameName_ BepInEx Template</Title>
     <Authors>Robyn, Hamunii</Authors>
     <Description>A BepInEx template for making mods for _GameName_</Description>
