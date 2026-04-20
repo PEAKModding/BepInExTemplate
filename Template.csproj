@@ -31,7 +31,14 @@
     <LocalizeTemplates>false</LocalizeTemplates>
   </PropertyGroup>
 
+  <!-- MinVer -->
+  <PropertyGroup>
+    <MinVerDefaultPreReleaseIdentifiers>dev.0</MinVerDefaultPreReleaseIdentifiers>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="MinVer" Version="7.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.TemplateEngine.Tasks" Version="*" PrivateAssets="all"
       IsImplicitlyDefined="true" />
   </ItemGroup>
