@@ -50,6 +50,25 @@
             "description": "Gitignore ignores everything and specifies what to include.",
             "datatype": "bool",
             "defaultValue": "false"
+        },
+        "github-workflow": {
+            "type": "parameter",
+            "displayName": "GitHub Workflow",
+            "description": "Use GitHub actions for publishing & git tags for versioning.",
+            "datatype": "bool",
+            "defaultValue": "false"
         }
-    }
+    },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "!(github-workflow)",
+                    "exclude": [
+                        ".github/**"
+                    ]
+                }
+            ]
+        }
+    ]
 }

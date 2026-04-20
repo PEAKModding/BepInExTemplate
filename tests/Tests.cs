@@ -47,6 +47,7 @@ public class BepInExTemplateTest(ITestOutputHelper output)
                     "--no-tutorial",
                     "--library",
                     "--inverted-gitignore",
+                    "--github-workflow",
                 ]
             ),
         ];

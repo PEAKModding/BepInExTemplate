@@ -48,6 +48,9 @@
     <!-- Source-only polyfills for C# language features https://github.com/Sergio0694/PolySharp -->
 <!--#endif -->
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
+<!--#if (github-workflow) -->
+    <PackageReference Include="MinVer" Version="7.0.0" PrivateAssets="all" />
+<!--#endif -->
   </ItemGroup>
 
   <!-- Modding dependencies -->

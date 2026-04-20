@@ -16,10 +16,12 @@
     <!-- Package name on Thunderstore. Must not contain spaces ' ' or dashes '-'. -->
 <!--#endif -->
     <ThunderstoreName>BepInExModTemplate</ThunderstoreName>
+<!--#if (!github-workflow) -->
 <!--#if (!no-tutorial) -->
     <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
 <!--#endif -->
     <Version>0.1.0</Version>
+<!--#endif -->
     <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
     <!--
         Communities and package categories metadata for publishing with ThunderPipe.
