@@ -31,6 +31,18 @@ At this point, you should now have a basic working template! But there's more wo
 > [!TIP]  
 > Do not delete this file from your fork. Keeping this may help other developers who are looking to create and maintain a template like this learn how to do just that.
 
+## Testing
+
+Run tests with:
+
+```sh
+dotnet test
+```
+
+If you've done any changes to the template, the tests will fail. This is expected, as these are snapshot tests. Take a look at the received files which were different, and if they look correct, overwrite the file in verified directory so that the new file becomes the new expected result. Then commit the new verified files to git.
+
+Learn more: <https://github.com/VerifyTests/Verify#subsequent-verification>
+
 ## Uploading to NuGet
 
 ### Setup

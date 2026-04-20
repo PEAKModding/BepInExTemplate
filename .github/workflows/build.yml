@@ -1,4 +1,4 @@
-name: Build Template
+name: Build and Test Template
 
 on:
   push:
@@ -26,3 +26,6 @@ jobs:
           dotnet restore --locked-mode
           dotnet tool restore
           dotnet pack -c Release
+
+      - name: Run Snapshot Tests
+        run: dotnet test -c Release --no-build
