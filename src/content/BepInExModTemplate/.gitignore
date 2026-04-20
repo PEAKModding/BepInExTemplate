@@ -1,3 +1,44 @@
+#if (inverted-gitignore)
+# Ignore everything on root level
+/*
+
+# Ignore always
+*.csproj.user
+*.user.props
+bin/
+obj/
+
+# Add source files
+!/src/
+!/tests/
+
+# Example: Unity Project for building Asset Bundles
+# /src/UnityProject/*
+# /src/UnityProject/Assets/*
+# !/src/UnityProject/Assets/
+# !/src/UnityProject/Assets/_Mod/
+
+# Config files
+!/.config/
+/.config/*
+!/.config/dotnet-tools.json
+
+!/.github/
+
+# Add root level files
+!/.csharpierignore
+!/.editorconfig
+!/.gitignore
+!/Config.Build.user.props.template
+!/CONTRIBUTING.md
+!/Directory.Build.props
+!/Directory.Build.targets
+!/global.json
+!/icon.png
+!/LICENSE
+!/BepInExModTemplate.slnx
+!/README.md
+#else
 # Created by https://www.toptal.com/developers/gitignore/api/csharp
 # Edit at https://www.toptal.com/developers/gitignore?templates=csharp
 
@@ -221,8 +262,12 @@ node_modules/
 *.sln.iml
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
-artifacts/*/dist/**/*
-artifacts/**/*.zip
-*.txt
 artifacts/**
 Config.Build.user.props
+
+# Example: Unity Project for building Asset Bundles
+# /src/UnityProject/*
+# /src/UnityProject/Assets/*
+# !/src/UnityProject/Assets/
+# !/src/UnityProject/Assets/_Mod/
+#endif

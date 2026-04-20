@@ -39,7 +39,14 @@ public class BepInExTemplateTest(ITestOutputHelper output)
             new(
                 "NoTutorialAndGitInclude",
                 "NoTutorialAndGitIncludeTest",
-                ["--guid", "AuthorName.ModName", "--ts-team", "Test_Team", "--no-tutorial"]
+                [
+                    "--guid",
+                    "AuthorName.ModName",
+                    "--ts-team",
+                    "Test_Team",
+                    "--no-tutorial",
+                    "--inverted-gitignore",
+                ]
             ),
         ];
 }

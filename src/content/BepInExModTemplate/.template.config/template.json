@@ -43,6 +43,13 @@
             "description": "If true, NuGet metadata is included in the project.",
             "datatype": "bool",
             "defaultValue": "false"
+        },
+        "inverted-gitignore": {
+            "type": "parameter",
+            "displayName": "Inverted gitignore",
+            "description": "Gitignore ignores everything and specifies what to include.",
+            "datatype": "bool",
+            "defaultValue": "false"
         }
     }
 }
