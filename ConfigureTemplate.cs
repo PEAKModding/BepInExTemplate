@@ -6,20 +6,19 @@ using System.Text.RegularExpressions;
 // Configure the following values:
 
 // Name from Steam directory
-
-const string GameName = "Lethal Company";
+const string GameName = "PEAK";
 
 // Name with spaces removed. Used for MSBuild properties & readme example
-const string GameNameNoSpaces = "LethalCompany";
+const string GameNameNoSpaces = "PEAK";
 
 // Used for template `shortName`. Determines the command for dotnet new, e.g. dotnet new lcmod
-const string GameNameShortNoSpacesLowercase = "lc";
+const string GameNameShortNoSpacesLowercase = "peak";
 
 // A comma-separated list of the Template NuGet package authors
 const string TemplateAuthors = "Robyn, Hamunii";
 
 // The GitHub account name of the owner of the repo
-const string TemplateRepoAuthorNoSpaces = "LethalCompanyModding";
+const string TemplateRepoAuthorNoSpaces = "PEAKModding";
 
 // These combine into NuGet package id, e.g. LethalCompanyModding.BepInExTemplate
 const string TemplateNuGetPackagePrefixNoSpaces = TemplateRepoAuthorNoSpaces;
@@ -30,11 +29,11 @@ const string TemplatePackageProjectUrl =
     $"https://github.com/{TemplateRepoAuthorNoSpaces}/{TemplatePackageNameNoSpaces}";
 
 // See: <https://thunderstore.io/api/experimental/community/>
-const string ThunderstoreGameIdentifier = "lethal-company";
+const string ThunderstoreGameIdentifier = "peak";
 
 // The BepInEx package for the Thunderstore community
-const string BepInExPackFullName = "BepInEx-BepInExPack";
-const string BepInExPackVersion = "5.4.2305";
+const string BepInExPackFullName = "BepInEx-BepInExPack_PEAK";
+const string BepInExPackVersion = "5.4.75301";
 
 // A valid TFM https://learn.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-frameworks
 const string PluginTargetFramework = "netstandard2.1";
@@ -42,12 +41,12 @@ const string PluginTargetFramework = "netstandard2.1";
 // NuGet GameLibs package as a fallback if local references aren't found or used.
 // If a proper GameLibs package doesn't exist,
 // use for example a UnityEngine.Modules package from BepInEx NuGet feed.
-const string GameLibsPackage = "LethalCompany.GameLibs.Steam";
-const string GameLibsVersion = "*-*";
+const string GameLibsPackage = "UnityEngine.Modules";
+const string GameLibsVersion = "6000.0.36";
 
 // Does this template support a proper GameLibs package?
 // This determines whether or not the --github-workflow option is available.
-const bool GameLibsAvailable = true;
+const bool GameLibsAvailable = false;
 
 // After configuration is done, execute this script with `dotnet run ConfigureTemplate.cs`.
 // The rest of the script should be ignored.
