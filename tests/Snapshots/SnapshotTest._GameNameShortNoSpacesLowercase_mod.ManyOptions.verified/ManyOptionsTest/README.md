@@ -1,4 +1,4 @@
-﻿# NoTutorialAndGitIncludeTest
+﻿# ManyOptionsTest
 
 Describe your project here!
 

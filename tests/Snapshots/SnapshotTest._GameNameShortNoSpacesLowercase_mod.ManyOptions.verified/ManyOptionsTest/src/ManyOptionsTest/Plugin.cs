@@ -1,10 +1,10 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 
-namespace NoTutorialAndGitIncludeTest;
+namespace ManyOptionsTest;
 
 /// <summary>
-/// The BepInEx plugin class of NoTutorialAndGitIncludeTest.
+/// The BepInEx plugin class of ManyOptionsTest.
 /// </summary>
 [BepInAutoPlugin]
 public partial class Plugin : BaseUnityPlugin

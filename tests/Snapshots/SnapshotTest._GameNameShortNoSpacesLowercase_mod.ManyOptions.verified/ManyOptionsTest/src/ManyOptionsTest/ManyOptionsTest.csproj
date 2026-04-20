@@ -2,8 +2,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>AuthorName.ModName</AssemblyName>
-    <AssemblyTitle>NoTutorialAndGitIncludeTest</AssemblyTitle>
-    <ThunderstoreName>NoTutorialAndGitIncludeTest</ThunderstoreName>
+    <AssemblyTitle>ManyOptionsTest</AssemblyTitle>
+    <ThunderstoreName>ManyOptionsTest</ThunderstoreName>
     <Version>0.1.0</Version>
     <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
     <!--
@@ -15,6 +15,22 @@
     <ThunderstoreCategories>mods</ThunderstoreCategories>
     <IsThunderstorePackable>true</IsThunderstorePackable>
   </PropertyGroup>
+
+  <!-- NuGet metadata -->
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!--
+      TODO: Fill these values. See:
+      https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices
+    -->
+    <PackageId></PackageId>
+    <Description></Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(SolutionRoot)README.md" Pack="true" PackagePath="/" />
+    <None Include="$(SolutionRoot)icon.png" Pack="true" PackagePath="/" />
+  </ItemGroup>
 
   <!--
     Define mod files to copy to the relative BepInEx directory after build
