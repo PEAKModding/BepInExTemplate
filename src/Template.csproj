@@ -32,7 +32,6 @@
 
   <!-- MinVer -->
   <PropertyGroup>
-    <MinVerDefaultPreReleaseIdentifiers>dev.0</MinVerDefaultPreReleaseIdentifiers>
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 

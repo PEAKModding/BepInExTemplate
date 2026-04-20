@@ -49,10 +49,10 @@ New releases can be published by pushing a new git tag prefixed with `v`. This p
 - Valid tags: `v1.0.0`, `v1.1.1`
 - NOT valid: `v1`, `v1.0`, `1.0.0`
 
-To release a prerelease version, use the `dev.`-postfix:
+To release a prerelease version, use any postfix after `-`:
 
-- Valid tags: `v1.0.0-dev.0`, `v1.1.1-dev.1`
-- NOT valid: `v1-dev.0`, `v1.0-dev.0`, `v1.0.0-dev`, `1.0.0-dev.0`
+- Valid tags: `v1.0.0-alpha.0`, `v1.1.1-beta.1`, `v1.1.1-rc.0`,  `v1.1.1-dev`
+- NOT valid: `v1-dev.0`, `v1.0-dev.0`, `1.0.0-dev.0`
 
 ## Staying Up-to-Date With Upstream
 
