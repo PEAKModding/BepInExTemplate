@@ -36,7 +36,7 @@ obj/
 !/Directory.Build.targets
 !/global.json
 !/icon.png
-!/LICENSE
+!/LICENSE*
 !/README.md
 !/BepInExModTemplate.slnx
 #else
