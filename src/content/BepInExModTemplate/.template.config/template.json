@@ -51,6 +51,7 @@
             "datatype": "bool",
             "defaultValue": "false"
         },
+        // __TEMPLATE_CONFIG_IF(GameLibsAvailable)__
         "github-workflow": {
             "type": "parameter",
             "displayName": "GitHub Workflow",
@@ -58,6 +59,7 @@
             "datatype": "bool",
             "defaultValue": "false"
         }
+        // __TEMPLATE_CONFIG_ENDIF__
     },
     "sources": [
         {

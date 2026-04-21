@@ -47,7 +47,9 @@ public class BepInExTemplateTest(ITestOutputHelper output)
                     "--no-tutorial",
                     "--library",
                     "--inverted-gitignore",
+                    // __TEMPLATE_CONFIG_IF(GameLibsAvailable)__
                     "--github-workflow",
+                    // __TEMPLATE_CONFIG_ENDIF__
                 ]
             ),
         ];

@@ -69,7 +69,9 @@ Before creating a project, take a look at the available options so you are aware
 | -nt        | --no-tutorial        | If true, tutorial comments will not be present.                 | false    | bool | false               |
 | -li        | --library            | If true, NuGet metadata is included in the project.             | false    | bool | false               |
 | -ig        | --inverted-gitignore | Gitignore ignores everything and specifies what to include.     | false    | bool | false               |
+__TEMPLATE_CONFIG_IF(GameLibsAvailable)__
 | -gw        | --github-workflow    | Use GitHub actions for publishing & git tags for versioning.    | false    | bool | false               |
+__TEMPLATE_CONFIG_ENDIF__
 
 You can run `dotnet new _GameNameShortNoSpacesLowercase_mod --help` to see all available options.
 
@@ -153,6 +155,7 @@ You can directly publish to Thunderstore by including `-p:PublishTS=true` in the
 
 ### Publishing via GitHub Actions
 
+__TEMPLATE_CONFIG_IF(GameLibsAvailable)__  
 If the `--github-workflow` option was used for the creation of this project, you can also publish your package by pushing a git tag matching the following glob `*[0-9]+.[0-9]+.[0-9]+`, including the fact that your plugin is versioned via git tags by [minver](<https://github.com/adamralph/minver>).
 
 The wildcard at the beginning of the glob `*[0-9]+.[0-9]+.[0-9]+` is for if you want to define a prefix for minver. This is especially useful for [versioning multiple projects separately](<https://github.com/adamralph/minver#can-i-version-multiple-projects-in-a-single-repository-independently>).
@@ -165,3 +168,7 @@ The wildcard at the beginning of the glob `*[0-9]+.[0-9]+.[0-9]+` is for if you 
    - Setting a GitHub secret: <https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets>
 3. If the `--library` option was used, get your NuGet API key and create a new secret named `NUGET_API_KEY` on GitHub with the API key as its contents
    - Getting NuGet API key: <https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package#create-an-api-key>
+__TEMPLATE_CONFIG_ENDIF__  
+__TEMPLATE_CONFIG_IF(!GameLibsAvailable)__  
+This template doesn't support GitHub actions publishing due to a lack of GameLibs package for the game.
+__TEMPLATE_CONFIG_ENDIF__
