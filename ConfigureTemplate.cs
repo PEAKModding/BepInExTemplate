@@ -1,9 +1,12 @@
 #!/usr/bin/env dotnet
 #:property PublishAot=false
 
+using System.Text.RegularExpressions;
+
 // Configure the following values:
 
 // Name from Steam directory
+
 const string GameName = "Lethal Company";
 
 // Name with spaces removed. Used for MSBuild properties & readme example
@@ -36,9 +39,15 @@ const string BepInExPackVersion = "5.4.2305";
 // A valid TFM https://learn.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-frameworks
 const string PluginTargetFramework = "netstandard2.1";
 
-// NuGet GameLibs package as a fallback if local references aren't found or used
+// NuGet GameLibs package as a fallback if local references aren't found or used.
+// If a proper GameLibs package doesn't exist,
+// use for example a UnityEngine.Modules package from BepInEx NuGet feed.
 const string GameLibsPackage = "LethalCompany.GameLibs.Steam";
 const string GameLibsVersion = "*-*";
+
+// Does this template support a proper GameLibs package?
+// This determines whether or not the --github-workflow option is available.
+const bool GameLibsAvailable = true;
 
 // After configuration is done, execute this script with `dotnet run ConfigureTemplate.cs`.
 // The rest of the script should be ignored.
@@ -83,6 +92,9 @@ foreach (var filePath in src.Concat(tests).Concat([Path.Combine(dir, "README.md"
 
     var originalText = File.ReadAllText(filePath);
     var text = originalText;
+
+    text = EvaluateCustomPreprocessorDirectives(filePath, text);
+
     foreach (var (from, to) in stringsToReplace)
     {
         text = text.Replace(from, to, StringComparison.Ordinal);
@@ -105,6 +117,71 @@ foreach (var filePath in src.Concat(tests).Concat([Path.Combine(dir, "README.md"
         Console.WriteLine($"Replaced strings in file '{relativePath}'");
         File.WriteAllText(filePath, text);
     }
+}
+
+string EvaluateCustomPreprocessorDirectives(string filePath, string text)
+{
+    var regex = Matching.GetCustomPreprocessorMatches();
+
+    var matches = regex.Matches(text);
+
+    foreach (Match match in matches)
+    {
+        var fullMatch = match.Groups[0].Value;
+        var conditionOriginal = match.Groups[1].Value;
+        string condition = conditionOriginal;
+
+        var isInverted = condition.StartsWith('!');
+        if (isInverted)
+            condition = condition[1..];
+
+        bool keep = condition switch
+        {
+            "GameLibsAvailable" => GameLibsAvailable,
+            _ => throw new InvalidDataException($"Unsupported preprocessor condition '{match}'"),
+        };
+
+        if (isInverted)
+            keep = !keep;
+
+        if (keep)
+        {
+            var enumerator = fullMatch.AsSpan().Split('\n');
+
+            // Ignore first line
+            enumerator.MoveNext();
+
+            enumerator.MoveNext();
+            Index previousEnd = enumerator.Current.End;
+            Index previousEnd2 = previousEnd;
+            Index start = enumerator.Current.Start;
+            Index end = enumerator.Current.End;
+
+            // Continue until before endif:
+            // <previousEnd2>\n endif marker \n
+            while (enumerator.MoveNext())
+            {
+                end = previousEnd2;
+                previousEnd2 = previousEnd;
+                previousEnd = enumerator.Current.End;
+            }
+
+            var endWithNewline = end.Value + 1;
+            var cleanMatchContents = fullMatch[start..endWithNewline];
+            text = text.Replace(fullMatch, cleanMatchContents);
+        }
+        else
+        {
+            text = text.Replace(fullMatch, string.Empty);
+        }
+
+        var relativePath = Path.GetRelativePath(dir, filePath);
+        Console.WriteLine(
+            $"Evaluated preprocessor directive '{conditionOriginal}' in '{relativePath}'"
+        );
+    }
+
+    return text;
 }
 
 void RenameFileSystemEntriesRecursive(string path)
@@ -165,3 +242,12 @@ void MoveOrMergeOverwrite(string sourceDirName, string destDirName)
 
 Console.WriteLine($"Press any key to close");
 Console.ReadKey(true);
+
+internal static partial class Matching
+{
+    [GeneratedRegex(
+        @"^.*__TEMPLATE_CONFIG_IF\(([^)]+)\)__[\s\S]*?__TEMPLATE_CONFIG_ENDIF__.*\n",
+        RegexOptions.Multiline
+    )]
+    public static partial Regex GetCustomPreprocessorMatches();
+}
