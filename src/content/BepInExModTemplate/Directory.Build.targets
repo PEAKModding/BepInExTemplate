@@ -89,7 +89,7 @@
   </ItemGroup>
 
   <!-- Copy mod files defined in projects to the target BepInEx directory -->
-  <Target Name="DeployFiles" AfterTargets="PostBuildEvent" Condition="'$(DeployModFiles)' == 'true'">
+  <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployModFiles)' == 'true'">
     <PropertyGroup>
       <_TargetDir>$([MSBuild]::NormalizeDirectory($(_GameNameNoSpaces_BepInExDir)))</_TargetDir>
     </PropertyGroup>
@@ -104,7 +104,7 @@
     <Copy SourceFiles="@(ModFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
   </Target>
 
-  <Target Name="MapModFilesForThunderPipe" AfterTargets="PostBuildEvent">
+  <Target Name="MapModFilesForThunderPipe" AfterTargets="Build" BeforeTargets="ThunderPipePack">
     <ItemGroup>
       <ThunderstoreFile Include="@(ModFile)" />
     </ItemGroup>
