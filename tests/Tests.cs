@@ -13,7 +13,7 @@ public class BepInExTemplateTest(ITestOutputHelper output)
     [MemberData(nameof(Data))]
     public async Task SnapshotTest(NamedTemplateScenario scenario)
     {
-        TemplateVerifierOptions options = new("_GameNameShortNoSpacesLowercase_mod")
+        TemplateVerifierOptions options = new("peakmod")
         {
             TemplatePath = Path.Combine(PathHelper.TemplateContentDir, "BepInExModTemplate"),
             TemplateSpecificArgs = scenario.Args,

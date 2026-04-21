@@ -38,7 +38,7 @@
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageTags>_GameName_;$(PackageTags)</PackageTags>
+    <PackageTags>PEAK;$(PackageTags)</PackageTags>
   </PropertyGroup>
 
 <!--#endif -->
@@ -84,8 +84,8 @@
 <!--#endif -->
     <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Linux'))">$(HOME)/.local/share/</PathBeforeSteam>
     <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(MSBuildProgramFiles32)/</PathBeforeSteam>
-    <_GameNameNoSpaces_GameRootDir Condition="$(_GameNameNoSpaces_GameRootDir) == ''">$(PathBeforeSteam)Steam/steamapps/common/_GameName_/</_GameNameNoSpaces_GameRootDir>
-    <_GameNameNoSpaces_BepInExDir Condition="$(_GameNameNoSpaces_BepInExDir) == ''">$(_GameNameNoSpaces_GameRootDir)/BepInEx/</_GameNameNoSpaces_BepInExDir>
-    <ManagedDir>$(_GameNameNoSpaces_GameRootDir)/_GameName__Data/Managed/</ManagedDir>
+    <PEAKGameRootDir Condition="$(PEAKGameRootDir) == ''">$(PathBeforeSteam)Steam/steamapps/common/PEAK/</PEAKGameRootDir>
+    <PEAKBepInExDir Condition="$(PEAKBepInExDir) == ''">$(PEAKGameRootDir)/BepInEx/</PEAKBepInExDir>
+    <ManagedDir>$(PEAKGameRootDir)/PEAK_Data/Managed/</ManagedDir>
   </PropertyGroup>
 </Project>

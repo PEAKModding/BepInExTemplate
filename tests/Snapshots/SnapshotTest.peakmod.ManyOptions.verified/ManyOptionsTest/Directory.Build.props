@@ -1,11 +1,5 @@
-﻿<Project>
-  <!--
-    This is a special file that contains shared configuration
-    for all project files in subdirectories.
-  -->
-
+<Project>
   <PropertyGroup>
-    <!-- Define a variable that points to this directory. -->
     <SolutionRoot>$(MSBuildThisFileDirectory)</SolutionRoot>
   </PropertyGroup>
 
@@ -22,36 +16,40 @@
     <RepositoryUrl></RepositoryUrl>
   </PropertyGroup>
 
+  <!-- Shared NuGet metadata -->
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <!--
+      TODO: Fill these values. See:
+      https://learn.microsoft.com/en-us/nuget/create-packages/package-authoring-best-practices
+    -->
+    <Authors></Authors>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>PEAK;$(PackageTags)</PackageTags>
+  </PropertyGroup>
+
   <!-- Shared primary configuration for the project -->
   <PropertyGroup>
-    <!-- Use latest C# version. -->
     <LangVersion>latest</LangVersion>
-    <!-- See: https://learn.microsoft.com/en-us/dotnet/csharp/nullable-references -->
     <Nullable>enable</Nullable>
-    <!-- https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/overview -->
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisMode>recommended</AnalysisMode>
-    <!-- Build, and other generated files go nicely into artifacts/ directory. -->
     <UseArtifactsOutput>true</UseArtifactsOutput>
-    <!-- Enable debug symbols. This will show source code line numbers in stack traces. -->
     <DebugSymbols>true</DebugSymbols>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <!-- Substitute full path to this directory with ./, hiding it from debug symbols. -->
     <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
   </PropertyGroup>
 
   <!-- Shared custom props -->
   <PropertyGroup>
-    <!--
-      Default values for paths. Do not modify,
-      instead configure your Config.Build.user.props file.
-    -->
     <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Linux'))">$(HOME)/.local/share/</PathBeforeSteam>
     <PathBeforeSteam Condition="$([MSBuild]::IsOSPlatform('Windows'))">$(MSBuildProgramFiles32)/</PathBeforeSteam>
-    <_GameNameNoSpaces_GameRootDir Condition="$(_GameNameNoSpaces_GameRootDir) == ''">$(PathBeforeSteam)Steam/steamapps/common/_GameName_/</_GameNameNoSpaces_GameRootDir>
-    <_GameNameNoSpaces_BepInExDir Condition="$(_GameNameNoSpaces_BepInExDir) == ''">$(_GameNameNoSpaces_GameRootDir)/BepInEx/</_GameNameNoSpaces_BepInExDir>
-    <ManagedDir>$(_GameNameNoSpaces_GameRootDir)/_GameName__Data/Managed/</ManagedDir>
+    <PEAKGameRootDir Condition="$(PEAKGameRootDir) == ''">$(PathBeforeSteam)Steam/steamapps/common/PEAK/</PEAKGameRootDir>
+    <PEAKBepInExDir Condition="$(PEAKBepInExDir) == ''">$(PEAKGameRootDir)/BepInEx/</PEAKBepInExDir>
+    <ManagedDir>$(PEAKGameRootDir)/PEAK_Data/Managed/</ManagedDir>
   </PropertyGroup>
 </Project>

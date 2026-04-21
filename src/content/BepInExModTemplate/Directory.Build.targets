@@ -91,14 +91,14 @@
   <!-- Copy mod files defined in projects to the target BepInEx directory -->
   <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployModFiles)' == 'true'">
     <PropertyGroup>
-      <_TargetDir>$([MSBuild]::NormalizeDirectory($(_GameNameNoSpaces_BepInExDir)))</_TargetDir>
+      <_TargetDir>$([MSBuild]::NormalizeDirectory($(PEAKBepInExDir)))</_TargetDir>
     </PropertyGroup>
     <Message
       Text="Deploy → @(ModFile -> '%(Destination)%(FileName)%(Extension)')"
       Importance="High"
     />
     <Error
-      Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure _GameNameNoSpaces_BepInExDir to point to a valid path in the Config.Build.user.props file."
+      Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure PEAKBepInExDir to point to a valid path in the Config.Build.user.props file."
       Condition="!Exists('$(_TargetDir)')"
     />
     <Copy SourceFiles="@(ModFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
