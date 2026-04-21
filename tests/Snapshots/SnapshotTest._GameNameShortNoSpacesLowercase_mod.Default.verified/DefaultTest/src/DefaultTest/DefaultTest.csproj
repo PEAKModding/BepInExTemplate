@@ -28,12 +28,12 @@
   -->
   <ItemGroup>
     <!-- TargetPath is the dll file produced during build. -->
-    <ThunderstoreFile Include="$(TargetPath)" Destination="plugins/" />
+    <ModFile Include="$(TargetPath)" Destination="plugins/" />
     <!--
       If your project needs additional files, e.g. asset bundles,
       you can add them here. Example:
 
-      <ThunderstoreFile Include="./Assets/bundle" Destination="plugins/" />
+      <ModFile Include="./Assets/bundle" Destination="plugins/" />
     -->
   </ItemGroup>
 

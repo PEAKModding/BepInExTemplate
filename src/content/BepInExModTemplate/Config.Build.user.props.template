@@ -16,7 +16,7 @@
     <!-- <_GameNameNoSpaces_BepInExDir></_GameNameNoSpaces_BepInExDir> -->
 
     <!-- Enable/disable deploying mod files to BepInEx directory. -->
-    <DeployThunderstoreFiles>true</DeployThunderstoreFiles>
+    <DeployModFiles>true</DeployModFiles>
   </PropertyGroup>
 
   <!--

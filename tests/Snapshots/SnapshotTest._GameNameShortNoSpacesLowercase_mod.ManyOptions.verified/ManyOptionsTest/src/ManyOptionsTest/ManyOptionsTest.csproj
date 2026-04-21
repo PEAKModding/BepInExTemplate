@@ -36,7 +36,7 @@
     and where they are packed to when building a Thunderstore package
   -->
   <ItemGroup>
-    <ThunderstoreFile Include="$(TargetPath)" Destination="plugins/" />
+    <ModFile Include="$(TargetPath)" Destination="plugins/" />
   </ItemGroup>
 
   <!-- Thunderstore package metadata -->
