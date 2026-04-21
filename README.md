@@ -8,7 +8,8 @@
     - [Project Structure](#project-structure)
     - [Setting Up The Config File](#setting-up-the-config-file)
     - [Thunderstore Packaging \& Publishing](#thunderstore-packaging--publishing)
-    - [GitHub Actions Publishing](#github-actions-publishing)
+    - [Publishing via GitHub Actions](#publishing-via-github-actions)
+      - [Setting up GitHub Actions](#setting-up-github-actions)
 
 > [!TIP]  
 > Looking to create a template like this? See [FORKING.md](./FORKING.md)
@@ -59,21 +60,27 @@ Once installed, the template will be available as `_GameName_ BepInEx Plugin` wi
 
 ## Creating a Project
 
-Open a terminal in your _GameName_ modding directory, and run:
+Before creating a project, take a look at the available options so you are aware of what can be customized:
+
+| Short Flag | Long Flag            | Description                                                     | Required | Type | Default             |
+| ---------- | -------------------- | --------------------------------------------------------------- | -------- | ---- | ------------------- |
+| -g         | --guid               | The global identifier for your mod. Example: AuthorName.ModName | true     | text |                     |
+| -tt        | --ts-team            | The thunderstore team to publish this package under.            | false    | text | TODO_team_name_here |
+| -nt        | --no-tutorial        | If true, tutorial comments will not be present.                 | false    | bool | false               |
+| -li        | --library            | If true, NuGet metadata is included in the project.             | false    | bool | false               |
+| -ig        | --inverted-gitignore | Gitignore ignores everything and specifies what to include.     | false    | bool | false               |
+| -gw        | --github-workflow    | Use GitHub actions for publishing & git tags for versioning.    | false    | bool | false               |
+
+You can run `dotnet new _GameNameShortNoSpacesLowercase_mod --help` to see all available options.
+
+Now that you are ready to create a project, open a terminal in your _GameName_ modding directory, and run the following, including any options of your choice:
 
 > [!NOTE]  
 > You should [set up a Thunderstore team first](<https://thunderstore.io/settings/teams/create/>) so you can use its name in the optional `--ts-team` argument so the template can give you a mostly correctly configured packaging setup.
 
 ```sh
-dotnet new _GameNameShortNoSpacesLowercase_mod --output ModName --guid YourAccount.ModName --ts-team YourThunderstoreTeam
+dotnet new _GameNameShortNoSpacesLowercase_mod --output ModName --guid AuthorName.ModName --ts-team YourThunderstoreTeam
 ```
-
-> [!TIP]  
-> If you are developing a public API, add the `--library` option for included NuGet metadata!
->
-> You can also use `--no-tutorial` to get rid of tutorial comments in the template. Note that this doesn't get rid of _all_ comments.
->
-> You can run `dotnet new _GameNameShortNoSpacesLowercase_mod --help` to see all available options.
 
 This will create a new directory with the mod name which contains the project.
 
@@ -144,6 +151,17 @@ The built package will be found at `./artifacts/thunderstore/`.
 
 You can directly publish to Thunderstore by including `-p:PublishTS=true` in the command. See the `Config.Build.user.props.template` file for configuration instructions.
 
-### GitHub Actions Publishing
+### Publishing via GitHub Actions
 
-Coming sometime, possibly.
+If the `--github-workflow` option was used for the creation of this project, you can also publish your package by pushing a git tag matching the following glob `*[0-9]+.[0-9]+.[0-9]+`, including the fact that your plugin is versioned via git tags by [minver](<https://github.com/adamralph/minver>).
+
+The wildcard at the beginning of the glob `*[0-9]+.[0-9]+.[0-9]+` is for if you want to define a prefix for minver. This is especially useful for [versioning multiple projects separately](<https://github.com/adamralph/minver#can-i-version-multiple-projects-in-a-single-repository-independently>).
+
+#### Setting up GitHub Actions
+
+1. Get your Thunderstore API token:  
+   - Log in to <https://thunderstore.io/> > `Settings` > `Teams` > `[select your team, create new if necessary]` > `Service Accounts` > `Add Service Account` > `[name it something like 'github' and confirm]` > `[keep the page open until you need to copy and paste the api token in the next step]`
+2. Create a new secret named `THUNDERSTORE_API_TOKEN` on GitHub with the Thunderstore API token as its contents
+   - Setting a GitHub secret: <https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets>
+3. If the `--library` option was used, get your NuGet API key and create a new secret named `NUGET_API_KEY` on GitHub with the API key as its contents
+   - Getting NuGet API key: <https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package#create-an-api-key>
