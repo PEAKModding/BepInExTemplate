@@ -89,6 +89,12 @@
     <Copy SourceFiles="@(ModFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
   </Target>
 
+  <Target Name="MapModFilesForThunderPipe" AfterTargets="Build" BeforeTargets="ThunderPipePack">
+    <ItemGroup>
+      <ThunderstoreFile Include="@(ModFile)" />
+    </ItemGroup>
+  </Target>
+
   <Target
     Name="EnsureReleaseOnPublishTS"
     BeforeTargets="ThunderPipePublish"

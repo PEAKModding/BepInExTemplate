@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Project properties -->
   <PropertyGroup>
     <!-- This is the most appropriate target framework for the game's Unity version. -->
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -6,20 +7,24 @@
     <AssemblyName>AuthorName.ModName</AssemblyName>
     <!-- This is the display name of your mod. -->
     <AssemblyTitle>DefaultTest</AssemblyTitle>
-    <!-- Package name on Thunderstore. Must not contain spaces ' ' or dashes '-'. -->
-    <ThunderstoreName>DefaultTest</ThunderstoreName>
     <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
     <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <!-- ThunderPipe properties -->
+  <PropertyGroup>
+    <!-- Whether or not this project should build a Thunderstore package. -->
+    <IsThunderstorePackable>true</IsThunderstorePackable>
+    <!-- Package name on Thunderstore. Must not contain spaces ' ' or dashes '-'. -->
+    <ThunderstoreName>DefaultTest</ThunderstoreName>
     <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
     <!--
-        Communities and package categories metadata for publishing with ThunderPipe.
-        Communities: https://thunderstore.io/api/experimental/community/
-        Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
+      Communities and package categories metadata for publishing with ThunderPipe.
+      Communities: https://thunderstore.io/api/experimental/community/
+      Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
     -->
     <ThunderstoreCommunities>_ThunderstoreGameIdentifier_</ThunderstoreCommunities>
     <ThunderstoreCategories>mods</ThunderstoreCategories>
-    <!-- Whether or not this project should build a Thunderstore package. -->
-    <IsThunderstorePackable>true</IsThunderstorePackable>
   </PropertyGroup>
 
   <!--

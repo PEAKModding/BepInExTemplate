@@ -1,18 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Project properties -->
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>AuthorName.ModName</AssemblyName>
     <AssemblyTitle>ManyOptionsTest</AssemblyTitle>
+    <!-- Prefix for MinVer to identify which git tags should version this project. -->
+    <MinVerTagPrefix></MinVerTagPrefix>
+  </PropertyGroup>
+
+  <!-- ThunderPipe properties -->
+  <PropertyGroup>
+    <IsThunderstorePackable>true</IsThunderstorePackable>
     <ThunderstoreName>ManyOptionsTest</ThunderstoreName>
     <ThunderstoreDescription>TODO: Fill in short mod description at max 250 characters.</ThunderstoreDescription>
     <!--
-        Communities and package categories metadata for publishing with ThunderPipe.
-        Communities: https://thunderstore.io/api/experimental/community/
-        Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
+      Communities and package categories metadata for publishing with ThunderPipe.
+      Communities: https://thunderstore.io/api/experimental/community/
+      Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
     -->
     <ThunderstoreCommunities>_ThunderstoreGameIdentifier_</ThunderstoreCommunities>
     <ThunderstoreCategories>mods</ThunderstoreCategories>
-    <IsThunderstorePackable>true</IsThunderstorePackable>
   </PropertyGroup>
 
   <!-- NuGet metadata -->

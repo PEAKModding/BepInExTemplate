@@ -64,11 +64,23 @@
     <Copy SourceFiles="@(ModFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
   </Target>
 
+  <Target Name="MapModFilesForThunderPipe" AfterTargets="Build" BeforeTargets="ThunderPipePack">
+    <ItemGroup>
+      <ThunderstoreFile Include="@(ModFile)" />
+    </ItemGroup>
+  </Target>
+
   <Target
     Name="EnsureReleaseOnPublishTS"
     BeforeTargets="ThunderPipePublish"
     Condition="'$(RunThunderPipePublishAfterBuild)' == 'true' And '$(Configuration)' != 'Release'"
   >
     <Error Text="Release configuration must be used when publishing Thunderstore package." />
+  </Target>
+
+  <Target Name="SetThunderstoreVersion" AfterTargets="MinVer">
+    <PropertyGroup>
+      <ThunderstoreVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</ThunderstoreVersion>
+    </PropertyGroup>
   </Target>
 </Project>
