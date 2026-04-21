@@ -111,4 +111,12 @@
   >
     <Error Text="Release configuration must be used when publishing Thunderstore package." />
   </Target>
+<!--#if (github-workflow) -->
+
+  <Target Name="SetThunderstoreVersion" AfterTargets="MinVer">
+    <PropertyGroup>
+      <ThunderstoreVersion>$(MinVerMajor).$(MinVerMinor).$(MinVerPatch)</ThunderstoreVersion>
+    </PropertyGroup>
+  </Target>
+<!--#endif -->
 </Project>
