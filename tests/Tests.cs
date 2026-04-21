@@ -19,7 +19,7 @@ public class BepInExTemplateTest(ITestOutputHelper output)
             TemplateSpecificArgs = scenario.Args,
             ScenarioName = scenario.ScenarioName,
             DoNotAppendTemplateArgsToScenarioName = true,
-            VerificationExcludePatterns = ["artifacts/**", "icon.png"],
+            VerificationExcludePatterns = ["*/artifacts/**", "icon.png"],
         };
         // The volume of files in a given change is generally much higher than the default 5 for this test suite
         DiffRunner.MaxInstancesToLaunch(20);
