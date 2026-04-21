@@ -28,7 +28,7 @@
             "description": "The thunderstore team to publish this package under.",
             "datatype": "text",
             "replaces": "_ts-team_",
-            "defaultValue": "TODO_Fill_in_your_Thunderstore_team_name_here"
+            "defaultValue": "TODO_team_name_here"
         },
         "no-tutorial": {
             "type": "parameter",
