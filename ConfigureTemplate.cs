@@ -83,8 +83,13 @@ if (!File.Exists(Path.Combine(dir, thisFileName)))
 
 RenameFileSystemEntriesRecursive(Path.Combine(dir, "tests"));
 
-var src = Directory.EnumerateFiles(Path.Combine(dir, "src"), "*", SearchOption.AllDirectories);
-var tests = Directory.EnumerateFiles(Path.Combine(dir, "tests"), "*", SearchOption.AllDirectories);
+var src = Directory
+    .EnumerateFiles(Path.Combine(dir, "src"), "*", SearchOption.AllDirectories)
+    .ToArray();
+
+var tests = Directory
+    .EnumerateFiles(Path.Combine(dir, "tests"), "*", SearchOption.AllDirectories)
+    .ToArray();
 
 foreach (var filePath in src.Concat(tests).Concat([Path.Combine(dir, "README.md")]))
 {
@@ -94,6 +99,8 @@ foreach (var filePath in src.Concat(tests).Concat([Path.Combine(dir, "README.md"
     var text = originalText;
 
     text = EvaluateCustomPreprocessorDirectives(filePath, text);
+    if (text is null)
+        continue;
 
     foreach (var (from, to) in stringsToReplace)
     {
@@ -119,30 +126,35 @@ foreach (var filePath in src.Concat(tests).Concat([Path.Combine(dir, "README.md"
     }
 }
 
-string EvaluateCustomPreprocessorDirectives(string filePath, string text)
+string? EvaluateCustomPreprocessorDirectives(string filePath, string text)
 {
-    var regex = Matching.GetCustomPreprocessorMatches();
+    var deleteMatches = Matching.GetCustomPreprocessorElseDeleteFileMatches().Matches(text);
+    foreach (Match deleteMatch in deleteMatches)
+    {
+        var condition = deleteMatch.Groups[1].Value;
+        bool keepFile = EvaluateCondition(condition);
 
-    var matches = regex.Matches(text);
+        var relativePath = Path.GetRelativePath(dir, filePath);
+        Console.WriteLine($"Evaluated preprocessor directive '{condition}' in '{relativePath}'");
 
+        if (keepFile)
+        {
+            var fullMatch = deleteMatch.Groups[0].Value;
+            text = text.Replace(fullMatch, string.Empty);
+        }
+        else
+        {
+            File.Delete(filePath);
+            return null;
+        }
+    }
+
+    var matches = Matching.GetCustomPreprocessorMatches().Matches(text);
     foreach (Match match in matches)
     {
         var fullMatch = match.Groups[0].Value;
-        var conditionOriginal = match.Groups[1].Value;
-        string condition = conditionOriginal;
-
-        var isInverted = condition.StartsWith('!');
-        if (isInverted)
-            condition = condition[1..];
-
-        bool keep = condition switch
-        {
-            "GameLibsAvailable" => GameLibsAvailable,
-            _ => throw new InvalidDataException($"Unsupported preprocessor condition '{match}'"),
-        };
-
-        if (isInverted)
-            keep = !keep;
+        var condition = match.Groups[1].Value;
+        bool keep = EvaluateCondition(condition);
 
         if (keep)
         {
@@ -157,18 +169,27 @@ string EvaluateCustomPreprocessorDirectives(string filePath, string text)
             Index start = enumerator.Current.Start;
             Index end = enumerator.Current.End;
 
+            int count = 0;
             // Continue until before endif:
             // <previousEnd2>\n endif marker \n
             while (enumerator.MoveNext())
             {
+                count++;
                 end = previousEnd2;
                 previousEnd2 = previousEnd;
                 previousEnd = enumerator.Current.End;
             }
 
-            var endWithNewline = end.Value + 1;
-            var cleanMatchContents = fullMatch[start..endWithNewline];
-            text = text.Replace(fullMatch, cleanMatchContents);
+            if (count == 1) // No content inside
+            {
+                text = text.Replace(fullMatch, string.Empty);
+            }
+            else
+            {
+                var endWithNewline = end.Value + 1;
+                var cleanMatchContents = fullMatch[start..endWithNewline];
+                text = text.Replace(fullMatch, cleanMatchContents);
+            }
         }
         else
         {
@@ -176,12 +197,29 @@ string EvaluateCustomPreprocessorDirectives(string filePath, string text)
         }
 
         var relativePath = Path.GetRelativePath(dir, filePath);
-        Console.WriteLine(
-            $"Evaluated preprocessor directive '{conditionOriginal}' in '{relativePath}'"
-        );
+        Console.WriteLine($"Evaluated preprocessor directive '{condition}' in '{relativePath}'");
     }
 
     return text;
+}
+
+bool EvaluateCondition(string condition)
+{
+    var normalizedCondition = condition;
+    var isInverted = condition.StartsWith('!');
+    if (isInverted)
+        normalizedCondition = condition[1..];
+
+    bool isTrue = normalizedCondition switch
+    {
+        "GameLibsAvailable" => GameLibsAvailable,
+        _ => throw new InvalidDataException($"Unsupported preprocessor condition '{condition}'"),
+    };
+
+    if (isInverted)
+        isTrue = !isTrue;
+
+    return isTrue;
 }
 
 void RenameFileSystemEntriesRecursive(string path)
@@ -250,4 +288,10 @@ internal static partial class Matching
         RegexOptions.Multiline
     )]
     public static partial Regex GetCustomPreprocessorMatches();
+
+    [GeneratedRegex(
+        @"^.*__TEMPLATE_CONFIG_IF\(([^)]+)\)ELSE_DELETE_FILE__.*\n",
+        RegexOptions.Multiline
+    )]
+    public static partial Regex GetCustomPreprocessorElseDeleteFileMatches();
 }

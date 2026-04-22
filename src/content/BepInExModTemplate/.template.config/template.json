@@ -65,7 +65,9 @@
         {
             "modifiers": [
                 {
+                    // __TEMPLATE_CONFIG_IF(GameLibsAvailable)__
                     "condition": "!(github-workflow)",
+                    // __TEMPLATE_CONFIG_ENDIF__
                     "exclude": [
                         ".github/**"
                     ]
