@@ -119,7 +119,7 @@
   >
     <Error Text="Release configuration must be used when publishing Thunderstore package." />
   </Target>
-<!-- __TEMPLATE_CONFIG_IF(!GameLibsAvailable)__ -->
+<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
 <!--#if (github-workflow) -->
 
   <Target Name="SetThunderstoreVersion" AfterTargets="MinVer">

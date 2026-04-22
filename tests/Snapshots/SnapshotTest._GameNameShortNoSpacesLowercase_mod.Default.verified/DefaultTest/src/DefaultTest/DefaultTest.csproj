@@ -7,8 +7,14 @@
     <AssemblyName>AuthorName.ModName</AssemblyName>
     <!-- This is the display name of your mod. -->
     <AssemblyTitle>DefaultTest</AssemblyTitle>
+<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
     <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
     <Version>0.1.0</Version>
+<!-- __TEMPLATE_CONFIG_ENDIF__ -->
+<!-- __TEMPLATE_CONFIG_IF(!GameLibsAvailable)__ -->
+    <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
+    <Version>0.1.0</Version>
+<!-- __TEMPLATE_CONFIG_ENDIF__ -->
   </PropertyGroup>
 
   <!-- ThunderPipe properties -->

@@ -34,3 +34,5 @@ You can directly publish to Thunderstore by including `-p:PublishTS=true` in the
 
 > [!TIP]  
 > Make sure the local package looks fine in `./artifacts/thunderstore/` first, then publish with `dotnet build -c Release -p:PublishTS=true -v d` to avoid potential mistakes.
+__TEMPLATE_CONFIG_IF(GameLibsAvailable)__
+__TEMPLATE_CONFIG_ENDIF__

@@ -4,8 +4,13 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>AuthorName.ModName</AssemblyName>
     <AssemblyTitle>ManyOptionsTest</AssemblyTitle>
+<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
     <!-- Prefix for MinVer to identify which git tags should version this project. -->
     <MinVerTagPrefix></MinVerTagPrefix>
+<!-- __TEMPLATE_CONFIG_ENDIF__ -->
+<!-- __TEMPLATE_CONFIG_IF(!GameLibsAvailable)__ -->
+    <Version>0.1.0</Version>
+<!-- __TEMPLATE_CONFIG_ENDIF__ -->
   </PropertyGroup>
 
   <!-- ThunderPipe properties -->

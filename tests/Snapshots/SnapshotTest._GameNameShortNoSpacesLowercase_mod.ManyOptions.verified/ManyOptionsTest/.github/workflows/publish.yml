@@ -1,4 +1,5 @@
-﻿name: Publish
+﻿# __TEMPLATE_CONFIG_IF(GameLibsAvailable)ELSE_DELETE_FILE__
+name: Publish
 
 on:
   push:

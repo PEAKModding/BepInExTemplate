@@ -40,6 +40,8 @@
     <PackageReference Include="Hamunii.BepInEx.AutoPlugin" Version="2.1.*" PrivateAssets="all" />
     <!-- Source-only polyfills for C# language features https://github.com/Sergio0694/PolySharp -->
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
+<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
+<!-- __TEMPLATE_CONFIG_ENDIF__ -->
   </ItemGroup>
 
   <!-- Modding dependencies -->
@@ -102,4 +104,6 @@
   >
     <Error Text="Release configuration must be used when publishing Thunderstore package." />
   </Target>
+<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
+<!-- __TEMPLATE_CONFIG_ENDIF__ -->
 </Project>
