@@ -1,12 +1,12 @@
 {
     "$schema": "http://json.schemastore.org/template",
-    "author": "_TemplateRepoAuthorNoSpaces_",
+    "author": "PEAKModding",
     "classifications": [
         "BepInEx", "Plugin", "Mod"
     ],
-    "identity": "_TemplateRepoAuthorNoSpaces_._TemplatePackageNameNoSpaces_",
-    "name": "_GameName_ BepInEx Plugin",
-    "shortName": "_GameNameShortNoSpacesLowercase_mod",
+    "identity": "PEAKModding.BepInExTemplate",
+    "name": "PEAK BepInEx Plugin",
+    "shortName": "peakmod",
     "tags": {
         "language": "C#",
         "type": "project"
@@ -51,23 +51,11 @@
             "datatype": "bool",
             "defaultValue": "false"
         },
-        // __TEMPLATE_CONFIG_IF(GameLibsAvailable)__
-        "github-workflow": {
-            "type": "parameter",
-            "displayName": "GitHub Workflow",
-            "description": "Use GitHub actions for publishing & git tags for versioning.",
-            "datatype": "bool",
-            "defaultValue": "false"
-        }
-        // __TEMPLATE_CONFIG_ENDIF__
     },
     "sources": [
         {
             "modifiers": [
                 {
-                    // __TEMPLATE_CONFIG_IF(GameLibsAvailable)__
-                    "condition": "!(github-workflow)",
-                    // __TEMPLATE_CONFIG_ENDIF__
                     "exclude": [
                         ".github/**"
                     ]

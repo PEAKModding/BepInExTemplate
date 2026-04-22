@@ -1,9 +1,4 @@
 <Project>
-  <!--
-    This is a special file that contains shared configuration
-    for all project files in subdirectories.
-  -->
-
   <Sdk Name="ThunderPipe.Sdk" Version="0.1.3" />
 
   <PropertyGroup>
@@ -12,10 +7,6 @@
       https://nuget.bepinex.dev/v3/index.json;
       https://nuget.windows10ce.com/nuget/v3/index.json
     </RestoreAdditionalProjectSources>
-    <!--
-      Conditions for ThunderPipe.Sdk to Pack, and Publish to Thunderstore
-      Learn more: https://github.com/WarperSan/ThunderPipe/blob/master/ThunderPipe.Sdk/README.md
-    -->
     <RunThunderPipePackAfterBuild
       Condition="'$(RunThunderPipePackAfterBuild)' != 'false' And '$(IsThunderstorePackable)' == 'true' And '$(Configuration)' == 'Release'"
       >true</RunThunderPipePackAfterBuild
@@ -28,20 +19,10 @@
 
   <!-- Build dependencies -->
   <ItemGroup>
-    <!--
-      If you upload your project on NuGet, PrivateAssets="all"
-      prevents consumers of your package from referencing these
-      packages transitively. This is desired because these packages
-      are not required by anyone using your package as they are
-      code analyzers, source generators, or other build-only packages.
-    -->
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.3" PrivateAssets="all" />
     <PackageReference Include="Hamunii.BepInEx.AutoPlugin" Version="2.1.*" PrivateAssets="all" />
-    <!-- Source-only polyfills for C# language features https://github.com/Sergio0694/PolySharp -->
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="all" />
-<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
-<!-- __TEMPLATE_CONFIG_ENDIF__ -->
   </ItemGroup>
 
   <!-- Modding dependencies -->
@@ -58,34 +39,25 @@
 
   <!-- Local game references -->
   <ItemGroup Condition="Exists('$(ManagedDir)')">
-    <!--
-      Reference all assemblies except ones that come
-      with our target framework or would cause conflicts.
-      Private="false" prevents these from being copied to build output.
-    -->
     <LocalReferences
       Include="$(ManagedDir)*.dll"
       Exclude="$(ManagedDir)Mono*.dll;$(ManagedDir)netstandard.dll;$(ManagedDir)System*.dll;$(ManagedDir)mscorlib.dll"
     />
     <Reference Include="@(LocalReferences)" Private="false" />
-    <!--
-      Publicize these assemblies so we can access their internal members.
-      Learn more at: https://github.com/BepInEx/BepInEx.AssemblyPublicizer
-    -->
     <Reference Include="$(ManagedDir)Assembly-CSharp.dll" Private="false" Publicize="true" />
   </ItemGroup>
 
   <!-- Copy mod files defined in projects to the target BepInEx directory -->
   <Target Name="DeployFiles" AfterTargets="Build" Condition="'$(DeployModFiles)' == 'true'">
     <PropertyGroup>
-      <_TargetDir>$([MSBuild]::NormalizeDirectory($(_GameNameNoSpaces_BepInExDir)))</_TargetDir>
+      <_TargetDir>$([MSBuild]::NormalizeDirectory($(PEAKBepInExDir)))</_TargetDir>
     </PropertyGroup>
     <Message
       Text="Deploy → @(ModFile -> '%(Destination)%(FileName)%(Extension)')"
       Importance="High"
     />
     <Error
-      Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure _GameNameNoSpaces_BepInExDir to point to a valid path in the Config.Build.user.props file."
+      Text="BepInEx directory '$(_TargetDir)' doesn't exist! Configure PEAKBepInExDir to point to a valid path in the Config.Build.user.props file."
       Condition="!Exists('$(_TargetDir)')"
     />
     <Copy SourceFiles="@(ModFile)" DestinationFolder="$(_TargetDir)%(Destination)" />
@@ -104,6 +76,4 @@
   >
     <Error Text="Release configuration must be used when publishing Thunderstore package." />
   </Target>
-<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
-<!-- __TEMPLATE_CONFIG_ENDIF__ -->
 </Project>

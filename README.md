@@ -1,6 +1,6 @@
-# BepInEx Template for _GameName_
+# BepInEx Template for PEAK
 
-- [BepInEx Template for _GameName_](#bepinex-template-for-gamename)
+- [BepInEx Template for PEAK](#bepinex-template-for-gamename)
   - [Installing](#installing)
     - [From NuGet (Recommended)](#from-nuget-recommended)
     - [Manually](#manually)
@@ -26,7 +26,7 @@
 Run the following command:
 
 ```bash
-dotnet new install _TemplateNuGetPackagePrefixNoSpaces_._TemplatePackageNameNoSpaces_
+dotnet new install PEAKModding.BepInExTemplate
 ```
 
 > [!TIP]  
@@ -56,7 +56,7 @@ To uninstall:
 dotnet new uninstall .
 ```
 
-Once installed, the template will be available as `_GameName_ BepInEx Plugin` with an alias `_GameNameShortNoSpacesLowercase_mod`.
+Once installed, the template will be available as `PEAK BepInEx Plugin` with an alias `peakmod`.
 
 ## Creating a Project
 
@@ -69,19 +69,16 @@ Before creating a project, take a look at the available options so you are aware
 | -nt        | --no-tutorial        | If true, tutorial comments will not be present.                 | false    | bool | false               |
 | -li        | --library            | If true, NuGet metadata is included in the project.             | false    | bool | false               |
 | -ig        | --inverted-gitignore | Gitignore ignores everything and specifies what to include.     | false    | bool | false               |
-__TEMPLATE_CONFIG_IF(GameLibsAvailable)__
-| -gw        | --github-workflow    | Use GitHub actions for publishing & git tags for versioning.    | false    | bool | false               |
-__TEMPLATE_CONFIG_ENDIF__
 
-You can run `dotnet new _GameNameShortNoSpacesLowercase_mod --help` to see all available options.
+You can run `dotnet new peakmod --help` to see all available options.
 
-Now that you are ready to create a project, open a terminal in your _GameName_ modding directory, and run the following, including any options of your choice:
+Now that you are ready to create a project, open a terminal in your PEAK modding directory, and run the following, including any options of your choice:
 
 > [!NOTE]  
 > You should [set up a Thunderstore team first](<https://thunderstore.io/settings/teams/create/>) so you can use its name in the optional `--ts-team` argument so the template can give you a mostly correctly configured packaging setup.
 
 ```sh
-dotnet new _GameNameShortNoSpacesLowercase_mod --output ModName --guid AuthorName.ModName --ts-team YourThunderstoreTeam
+dotnet new peakmod --output ModName --guid AuthorName.ModName --ts-team YourThunderstoreTeam
 ```
 
 This will create a new directory with the mod name which contains the project.
@@ -93,11 +90,11 @@ You now have a (mostly) working setup. See [Setting Up The Config File](#setting
 This example demonstrates what files should appear and where:
 
 ```sh
-~/Workspace/_GameNameNoSpaces_$ dotnet new _GameNameShortNoSpacesLowercase_mod --output MyCoolMod --guid _TemplateRepoAuthorNoSpaces_.MyCoolMod --ts-team _TemplateRepoAuthorNoSpaces_
-The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
+~/Workspace/PEAK$ dotnet new peakmod --output MyCoolMod --guid PEAKModding.MyCoolMod --ts-team PEAKModding
+The template "PEAK BepInEx Plugin" was created successfully.
 
-~/Workspace/_GameNameNoSpaces_$ cd MyCoolMod/
-~/Workspace/_GameNameNoSpaces_/MyCoolMod$ tree
+~/Workspace/PEAK$ cd MyCoolMod/
+~/Workspace/PEAK/MyCoolMod$ tree
 .
 ├── CHANGELOG.md
 ├── Config.Build.user.props.template
@@ -155,20 +152,4 @@ You can directly publish to Thunderstore by including `-p:PublishTS=true` in the
 
 ### Publishing via GitHub Actions
 
-__TEMPLATE_CONFIG_IF(GameLibsAvailable)__  
-If the `--github-workflow` option was used for the creation of this project, you can also publish your package by pushing a git tag matching the following glob `*[0-9]+.[0-9]+.[0-9]+`, including the fact that your plugin is versioned via git tags by [minver](<https://github.com/adamralph/minver>).
-
-The wildcard at the beginning of the glob `*[0-9]+.[0-9]+.[0-9]+` is for if you want to define a prefix for minver. This is especially useful for [versioning multiple projects separately](<https://github.com/adamralph/minver#can-i-version-multiple-projects-in-a-single-repository-independently>).
-
-#### Setting up GitHub Actions
-
-1. Get your Thunderstore API token:  
-   - Log in to <https://thunderstore.io/> > `Settings` > `Teams` > `[select your team, create new if necessary]` > `Service Accounts` > `Add Service Account` > `[name it something like 'github' and confirm]` > `[keep the page open until you need to copy and paste the api token in the next step]`
-2. Create a new secret named `THUNDERSTORE_API_TOKEN` on GitHub with the Thunderstore API token as its contents
-   - Setting a GitHub secret: <https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets>
-3. If the `--library` option was used, get your NuGet API key and create a new secret named `NUGET_API_KEY` on GitHub with the API key as its contents
-   - Getting NuGet API key: <https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package#create-an-api-key>
-__TEMPLATE_CONFIG_ENDIF__  
-__TEMPLATE_CONFIG_IF(!GameLibsAvailable)__  
 This template doesn't support GitHub actions publishing due to a lack of GameLibs package for the game.
-__TEMPLATE_CONFIG_ENDIF__
