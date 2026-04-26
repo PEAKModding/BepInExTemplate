@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <!-- Project properties -->
   <PropertyGroup>
     <!-- This is the most appropriate target framework for the game's Unity version. -->
@@ -7,14 +7,8 @@
     <AssemblyName>AuthorName.ModName</AssemblyName>
     <!-- This is the display name of your mod. -->
     <AssemblyTitle>DefaultTest</AssemblyTitle>
-<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
     <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
     <Version>0.1.0</Version>
-<!-- __TEMPLATE_CONFIG_ENDIF__ -->
-<!-- __TEMPLATE_CONFIG_IF(!GameLibsAvailable)__ -->
-    <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
-    <Version>0.1.0</Version>
-<!-- __TEMPLATE_CONFIG_ENDIF__ -->
   </PropertyGroup>
 
   <!-- ThunderPipe properties -->
@@ -27,9 +21,9 @@
     <!--
       Communities and package categories metadata for publishing with ThunderPipe.
       Communities: https://thunderstore.io/api/experimental/community/
-      Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
+      Categories: https://thunderstore.io/api/experimental/community/peak/category/
     -->
-    <ThunderstoreCommunities>_ThunderstoreGameIdentifier_</ThunderstoreCommunities>
+    <ThunderstoreCommunities>peak</ThunderstoreCommunities>
     <ThunderstoreCategories>mods</ThunderstoreCategories>
   </PropertyGroup>
 
@@ -60,7 +54,7 @@
       Note: This does NOT mark these as dependencies for this C# project;
             that must be done separately with PackageReference items.
     -->
-    <ThunderstoreDependency Include="_BepInExPackFullName_" Version="_BepInExPackVersion_" />
+    <ThunderstoreDependency Include="BepInEx-BepInExPack_PEAK" Version="5.4.75301" />
   </ItemGroup>
 
   <!--

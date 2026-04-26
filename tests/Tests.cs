@@ -13,7 +13,7 @@ public class BepInExTemplateTest(ITestOutputHelper output)
     [MemberData(nameof(Data))]
     public async Task SnapshotTest(NamedTemplateScenario scenario)
     {
-        TemplateVerifierOptions options = new("_GameNameShortNoSpacesLowercase_mod")
+        TemplateVerifierOptions options = new("peakmod")
         {
             TemplatePath = Path.Combine(PathHelper.TemplateContentDir, "BepInExModTemplate"),
             TemplateSpecificArgs = scenario.Args,
@@ -47,9 +47,6 @@ public class BepInExTemplateTest(ITestOutputHelper output)
                     "--no-tutorial",
                     "--library",
                     "--inverted-gitignore",
-                    // __TEMPLATE_CONFIG_IF(GameLibsAvailable)__
-                    "--github-workflow",
-                    // __TEMPLATE_CONFIG_ENDIF__
                 ]
             ),
         ];
