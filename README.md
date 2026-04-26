@@ -125,7 +125,7 @@ The template "_GameNameNoSpaces_ BepInEx Plugin" was created successfully.
   - `<project-name>.slnx` is file which defines which `csproj` files are included in your project
   - `global.json` informs your dev tools of the minimum supported .NET SDK version for the project
   - `CHANGELOG.md`, `icon.png`, `LICENSE`, and `README.md` are placeholder files which are to be modified by you
-    - These are included in your Thunderstore package, which is configured in `./src/<project-name>/thunderstore.toml`
+    - These are included in your Thunderstore package, which is configured in `./src/<project-name>/<project-name>.csproj`
 
 The project is configured so that it's easy to add new projects into your project solution. Even if you don't need that, it's a good idea to follow a standard project structure in case a need ever comes, or just so that everything is where you'd expect it to be. For example, does your project need automated tests? Copy your `./src/<project-name>/` plugin's `csproj` and `Plugin.cs` to `./tests/<project-name>.Tests/`, add the new `csproj` to your `slnx` project, and start working on your test project.
 
@@ -156,7 +156,7 @@ You can directly publish to Thunderstore by including `-p:PublishTS=true` in the
 ### Publishing via GitHub Actions
 
 __TEMPLATE_CONFIG_IF(GameLibsAvailable)__  
-If the `--github-workflow` option was used for the creation of this project, you can also publish your package by pushing a git tag matching the following glob `*[0-9]+.[0-9]+.[0-9]+`, including the fact that your plugin is versioned via git tags by [minver](<https://github.com/adamralph/minver>).
+If the `--github-workflow` option is used for the creation of your project, you can also publish your package by pushing a git tag matching the following glob `*[0-9]+.[0-9]+.[0-9]+`, including the fact that your plugin is versioned via git tags by [minver](<https://github.com/adamralph/minver>).
 
 The wildcard at the beginning of the glob `*[0-9]+.[0-9]+.[0-9]+` is for if you want to define a prefix for minver. This is especially useful for [versioning multiple projects separately](<https://github.com/adamralph/minver#can-i-version-multiple-projects-in-a-single-repository-independently>).
 
@@ -164,7 +164,7 @@ The wildcard at the beginning of the glob `*[0-9]+.[0-9]+.[0-9]+` is for if you 
 
 1. Get your Thunderstore API token:  
    - Log in to <https://thunderstore.io/> > `Settings` > `Teams` > `[select your team, create new if necessary]` > `Service Accounts` > `Add Service Account` > `[name it something like 'github' and confirm]` > `[keep the page open until you need to copy and paste the api token in the next step]`
-2. Create a new secret named `THUNDERSTORE_API_TOKEN` on GitHub with the Thunderstore API token as its contents
+2. Create a new secret named `THUNDERSTORE_API_TOKEN` on GitHub with the Thunderstore API token as its contentsj
    - Setting a GitHub secret: <https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-secrets>
 3. If the `--library` option was used, get your NuGet API key and create a new secret named `NUGET_API_KEY` on GitHub with the API key as its contents
    - Getting NuGet API key: <https://learn.microsoft.com/en-us/nuget/nuget-org/publish-a-package#create-an-api-key>
