@@ -60,7 +60,7 @@
         2. If `secret-tool` command is not found, install 'libsecret' to provide it
 
         3. Paste your Thunderstore token as input for the following command:
-            secret-tool store -l="Token for Test_Team" service thunderstore team Test_Team
+            secret-tool store -l "Token for Test_Team" service thunderstore team Test_Team
 
           Note: pasting can be done with Ctrl+Shift+V or Ctrl+V depending on your terminal app.
           The input may be hidden, which is a feature. Press enter to set the secret.
