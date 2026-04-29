@@ -1,4 +1,4 @@
-# BepInExModTemplate
+# ManyOptionsTest
 
 Describe your project here!
 

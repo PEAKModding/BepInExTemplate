@@ -13,23 +13,10 @@
     <!-- This is the display name of your mod. -->
 <!--#endif -->
     <AssemblyTitle>BepInExModTemplate</AssemblyTitle>
-<!-- __TEMPLATE_CONFIG_IF(GameLibsAvailable)__ -->
-<!--#if (github-workflow) -->
-    <!-- Prefix for MinVer to identify which git tags should version this project. -->
-    <MinVerTagPrefix></MinVerTagPrefix>
-<!--#else -->
 <!--#if (!no-tutorial) -->
     <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
 <!--#endif -->
     <Version>0.1.0</Version>
-<!--#endif -->
-<!-- __TEMPLATE_CONFIG_ENDIF__ -->
-<!-- __TEMPLATE_CONFIG_IF(!GameLibsAvailable)__ -->
-<!--#if (!no-tutorial) -->
-    <!-- The version number for your assembly, BepInEx plugin, and Thunderstore package. -->
-<!--#endif -->
-    <Version>0.1.0</Version>
-<!-- __TEMPLATE_CONFIG_ENDIF__ -->
   </PropertyGroup>
 
   <!-- ThunderPipe properties -->
@@ -46,9 +33,9 @@
     <!--
       Communities and package categories metadata for publishing with ThunderPipe.
       Communities: https://thunderstore.io/api/experimental/community/
-      Categories: https://thunderstore.io/api/experimental/community/_ThunderstoreGameIdentifier_/category/
+      Categories: https://thunderstore.io/api/experimental/community/peak/category/
     -->
-    <ThunderstoreCommunities>_ThunderstoreGameIdentifier_</ThunderstoreCommunities>
+    <ThunderstoreCommunities>peak</ThunderstoreCommunities>
     <ThunderstoreCategories>mods</ThunderstoreCategories>
   </PropertyGroup>
 
@@ -103,7 +90,7 @@
             that must be done separately with PackageReference items.
     -->
 <!--#endif -->
-    <ThunderstoreDependency Include="_BepInExPackFullName_" Version="_BepInExPackVersion_" />
+    <ThunderstoreDependency Include="BepInEx-BepInExPack_PEAK" Version="5.4.75301" />
   </ItemGroup>
 <!--#if (!no-tutorial) -->
 
